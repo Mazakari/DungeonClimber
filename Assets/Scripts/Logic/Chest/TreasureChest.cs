@@ -56,8 +56,8 @@ public class TreasureChest : MonoBehaviour
 
             yield return new WaitForSeconds(_lockUnlockDelay);
             chestUnlocked = true;
-            // Send callback to LevelCanvas to open level complete popup
-            LevelState.OnLevelResultShow?.Invoke(true);
+            // Send callback to LevelCanvas to open level complete popup with artifact locked bool parameter
+            LevelState.OnLevelResultShow?.Invoke(false);
         }
 
         yield break;

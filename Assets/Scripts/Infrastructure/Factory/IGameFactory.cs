@@ -10,6 +10,7 @@ public interface IGameFactory : IService
 
     void CreateLevelHud();
     void CreateMainMenulHud();
+    GameObject CreateLevelCell();
     void CreateVolumeControl();
     void Cleanup();
 }

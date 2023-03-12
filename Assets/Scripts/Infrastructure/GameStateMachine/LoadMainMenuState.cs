@@ -6,9 +6,16 @@ public class LoadMainMenuState : IPayloadedState<string>
     private readonly SceneLoader _sceneLoader;
     private readonly IGameFactory _gameFactory;
     private readonly LoadingCurtain _curtain;
-    private IPersistentProgressService _progressService;
+    private readonly IPersistentProgressService _progressService;
+    private readonly ILevelCellsService _cellsService;
 
-    public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService)
+    public LoadMainMenuState(
+        GameStateMachine gameStateMachine, 
+        SceneLoader sceneLoader, 
+        LoadingCurtain curtain, 
+        IGameFactory gameFactory, 
+        IPersistentProgressService progressService, 
+        ILevelCellsService cellsService)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
@@ -16,6 +23,7 @@ public class LoadMainMenuState : IPayloadedState<string>
         _curtain = curtain;
         _gameFactory = gameFactory;
         _progressService = progressService;
+        _cellsService = cellsService;
     }
 
     public void Enter(string sceneName)
@@ -33,6 +41,7 @@ public class LoadMainMenuState : IPayloadedState<string>
     {
         InitMainMenu();
         InitVolumeControl();
+        InitLevelCells();
 
         InformProgressReaders();
         _gameStateMachine.Enter<MainMenuState>();
@@ -43,11 +52,14 @@ public class LoadMainMenuState : IPayloadedState<string>
 
     private void InitVolumeControl()
     {
-        VolumeControl vc = GameObject.FindObjectOfType<VolumeControl>();
+        VolumeControl vc = Object.FindObjectOfType<VolumeControl>();
         if (vc != null) return;
 
         _gameFactory.CreateVolumeControl();
     }
+
+    private void InitLevelCells() => 
+        _cellsService.InitService();
 
     private void InformProgressReaders()
     {

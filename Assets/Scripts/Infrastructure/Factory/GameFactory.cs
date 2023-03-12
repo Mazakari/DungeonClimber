@@ -20,6 +20,9 @@ public class GameFactory : IGameFactory
     public void CreateMainMenulHud() =>
        InstantiateRegistered(AssetPath.MAIN_MENU_CANVAS_PATH);
 
+    public GameObject CreateLevelCell() =>
+      InstantiateRegistered(AssetPath.LEVEL_CELL_PREFAB_PATH);
+
     public void CreateVolumeControl() =>
         InstantiateRegistered(AssetPath.VOLUME_CONTROL_PREFAB_PATH);
 

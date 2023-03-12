@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameMetaData;
 
-public class MainMenuCanvas : MonoBehaviour
+public class MainMenuCanvas : MonoBehaviour, ISavedProgress
 {
     [Header("Buttons")]
     [SerializeField] private Button _startGameButton;
     [SerializeField] private Button _selectLevelsButton;
-    [SerializeField] private Button _clearProgressButton;
     [SerializeField] private Button _quitGameButton;
 
     [Header("Level Selection Popup")]
@@ -14,30 +15,26 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private GameObject _levelSelectionPopup;
     [SerializeField] private Transform _levelSelectionContent;
 
+    private ILevelCellsService _levelCellsService;
+
 
     private void OnEnable()
     {
-        _levelSelectionPopup.SetActive(false);
+        _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
 
-        //_startGameButton.onClick.AddListener(LoadLevel);
-        //_clearProgressButton.onClick.AddListener(ClearProgress);
+        _levelSelectionPopup.SetActive(false);
         _quitGameButton.onClick.AddListener(QuitGame);
     }
 
     private void Start()
     {
-        //_systemSettingsService = Services.SystemSettingsService;
-        //_levelsService = Services.LevelsService;
-
-        //_systemSettingsService.ShowMouseCursor();
-
+        //_levelCellsService = AllServices.Container.Single<ILevelCellsService>();
         InitLevelsSelectionPopup();
     }
 
     private void OnDisable()
     {
         _startGameButton.onClick.RemoveAllListeners();
-        _clearProgressButton.onClick.RemoveAllListeners();
         _quitGameButton.onClick.RemoveAllListeners();
     }
 
@@ -47,25 +44,61 @@ public class MainMenuCanvas : MonoBehaviour
     public void HideSelectLevelsPopup() => 
         _levelSelectionPopup.SetActive(false);
 
-
-    //private void LoadLevel() =>
-    //    Services.SaveLoadService.LoadLevel();
-
-    //private void ClearProgress() => 
-    //    Services.SaveLoadService.ClearProgress();
-
     private void QuitGame() => 
         Application.Quit();
 
     private void InitLevelsSelectionPopup()
     {
-        // TO DO load data from SaveLoadService
-        //Services.LevelsService.CreateLevels(_levelSelectionContent);
-        //Services.LevelsService.InitLevels();
+        for (int i = 0; i < _levelCellsService.Levels.Length; i++)
+        {
+            _levelCellsService.Levels[i].transform.SetParent(_levelSelectionContent);
+        }
+    }
 
-        //for (int i = 0; i < _levelsService.Levels.Length; i++)
-        //{
-        //    _levelsService.Levels[i].transform.SetParent(_levelSelectionContent);
-        //}
+    public void UpdateProgress(PlayerProgress progress) => 
+        CopyProgress(_levelCellsService.Levels, progress.gameData.levels);
+
+    public void LoadProgress(PlayerProgress progress)
+    {
+        int number;
+        string name;
+        bool locked;
+
+        Sprite sprite;
+        bool artifactLocked;
+
+        if (progress.gameData.levels.Count > 0)
+        {
+            for (int i = 0; i < progress.gameData.levels.Count; i++)
+            {
+                number = progress.gameData.levels[i].number;
+                name = progress.gameData.levels[i].sceneName;
+                locked = progress.gameData.levels[i].locked;
+
+                sprite = progress.gameData.levels[i].artifactSprite;
+                artifactLocked = progress.gameData.levels[i].artifactLocked;
+                
+
+                _levelCellsService.Levels[i].InitLevelCell(number, name, locked, sprite, artifactLocked);
+            }
+        }
+    }
+
+    private void CopyProgress(LevelCell[] source, List<LevelCellsData> target)
+    {
+        target.Clear();
+
+        for (int i = 0; i < source.Length; i++)
+        {
+            LevelCellsData data;
+            data.number = source[i].LevelNumber;
+            data.locked = source[i].LevelLocked;
+            data.sceneName = source[i].LevelSceneName;
+
+            data.artifactSprite = source[i].ArtifactSprite;
+            data.artifactLocked = source[i].ArtifactLocked;
+
+            target.Add(data);
+        }
     }
 }

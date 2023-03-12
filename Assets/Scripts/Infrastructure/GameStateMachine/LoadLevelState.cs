@@ -8,6 +8,7 @@ public class LoadLevelState : IPayloadedState<string>
     private readonly LoadingCurtain _curtain;
     private readonly IGameFactory _gameFactory;
     private readonly IPersistentProgressService _progressService;
+    
 
     public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService)
     {
@@ -17,6 +18,8 @@ public class LoadLevelState : IPayloadedState<string>
         _gameFactory = gameFactory;
         _progressService = progressService;
     }
+
+
 
     public void Enter(string sceneName)
     {

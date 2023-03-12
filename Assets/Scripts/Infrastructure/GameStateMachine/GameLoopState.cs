@@ -4,19 +4,21 @@ using UnityEngine;
 public class GameLoopState : IState
 {
     private readonly GameStateMachine _gameStateMachine;
-    private readonly IPersistentProgressService _progressService;
     private readonly SceneLoader _sceneLoader;
+    private ISaveLoadService _saveLoadService;
+    private readonly ILevelCellsService _levelCells;
 
     private string _currentLevelName;
     private string _nextLevelName;
 
     public static event Action<string> OnNextLevelNameSet;
 
-    public GameLoopState(GameStateMachine gameStateMachine, IPersistentProgressService progressService, SceneLoader sceneLoader)
+    public GameLoopState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ISaveLoadService saveLoadService, ILevelCellsService levelCells)
     {
         _gameStateMachine = gameStateMachine;
-        _progressService = progressService;
         _sceneLoader = sceneLoader;
+        _saveLoadService = saveLoadService;
+        _levelCells = levelCells;
     }
 
     public void Enter()
@@ -25,17 +27,17 @@ public class GameLoopState : IState
 
         SetLevelNames();
 
-        //GameplayCanvas.OnMainMenuButton += LoadMainMenu;
-        //GameplayLevelComplete_Popup.OnNextLevel += LoadNextLevel;
-        //GameplayLevelComplete_Popup.OnRestartLevel += RestartLevel;
-        //DeadZone.OnDeadZoneEnter += RestartLevel;
+        GameplayCanvas.OnMainMenuButton += LoadMainMenu;
+        GameplayCanvas.OnNextLevel += LoadNextLevel;
+        GameplayCanvas.OnRestartLevel += RestartLevel;
+        DeathTrigger.OnDeadZoneEnter += RestartLevel;
     }
     public void Exit()
     {
-        //GameplayCanvas.OnMainMenuButton -= LoadMainMenu;
-        //GameplayLevelComplete_Popup.OnNextLevel -= LoadNextLevel;
-        //GameplayLevelComplete_Popup.OnRestartLevel -= RestartLevel;
-        //DeadZone.OnDeadZoneEnter -= RestartLevel;
+        GameplayCanvas.OnMainMenuButton -= LoadMainMenu;
+        GameplayCanvas.OnNextLevel -= LoadNextLevel;
+        GameplayCanvas.OnRestartLevel -= RestartLevel;
+        DeathTrigger.OnDeadZoneEnter -= RestartLevel;
     }
 
     private void SetLevelNames()
@@ -43,11 +45,7 @@ public class GameLoopState : IState
         _currentLevelName = _sceneLoader.GetCurrentLevelName();
         _nextLevelName = _sceneLoader.GetNextLevelName();
 
-        // Send callback to GameplayCanvas with next level name
         OnNextLevelNameSet?.Invoke(_nextLevelName);
-
-        Debug.Log($"_currentLevelName = {_currentLevelName}");
-        Debug.Log($"_nextLevelName = {_nextLevelName}");
     }
 
     private void LoadMainMenu() =>
@@ -56,6 +54,9 @@ public class GameLoopState : IState
     private void RestartLevel() =>
         _gameStateMachine.Enter<LoadLevelState, string>(_currentLevelName);
 
-    private void LoadNextLevel() =>
+    private void LoadNextLevel()
+    {
+        _saveLoadService.SaveProgress();
         _gameStateMachine.Enter<LoadLevelState, string>(_nextLevelName);
+    }
 }

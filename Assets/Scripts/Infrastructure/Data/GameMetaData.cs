@@ -10,10 +10,11 @@ public class GameMetaData
     [Serializable]
     public struct LevelCellsData
     {
-        public string levelSceneName;
-        public bool levelLocked;
+        public int number;
+        public string sceneName;
+        public bool locked;
 
-        public Sprite levelArtifactSprite;
+        public Sprite artifactSprite;
         public bool artifactLocked;
     }
 
@@ -22,6 +23,6 @@ public class GameMetaData
     public GameMetaData(string initialLevel)
 	{
         nextLevel = initialLevel;
-
+        levels = new List<LevelCellsData>();
     }
 }

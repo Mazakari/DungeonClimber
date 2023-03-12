@@ -13,15 +13,15 @@ public class SceneLoader
     public SceneLoader(ICoroutineRunner coroutineRunner) =>
         _coroutineRunner = coroutineRunner;
 
-    public void Load(string name, Action onLoaded = null)
-    {
+    public void Load(string name, Action onLoaded = null) => 
         _coroutineRunner.StartCoroutine(LoadScene(name, onLoaded));
-    }
 
     private IEnumerator LoadScene(string nextScene, Action onLoaded = null)
     {
+        int firstlevelIndex = 2;
+
         if (SceneManager.GetActiveScene().name == nextScene &&
-            SceneManager.GetActiveScene().buildIndex <= 2)
+            SceneManager.GetActiveScene().buildIndex < firstlevelIndex)
         {
             onLoaded?.Invoke();
             Debug.Log("Same scene. Do nothing");
@@ -40,15 +40,15 @@ public class SceneLoader
 
     public int GetLevelsCount()
     {
-        int firstLevelIndex = SceneManager.GetSceneByName(Constants.NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME).buildIndex;
-        int totalScenesCount = SceneManager.sceneCountInBuildSettings;
+        int firstLevelIndex = GetFirstLevelIndex();
+        int totalScenesCount = _buildIndexScenesNames.Count;
 
         return totalScenesCount - firstLevelIndex;
     }
 
     public int GetCurrentLevelNumber()
     {
-        int firstLevelIndex = SceneManager.GetSceneByName(Constants.NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME).buildIndex;
+        int firstLevelIndex = GetFirstLevelIndex();
         int curLevelIndex = SceneManager.GetActiveScene().buildIndex;
 
         return (curLevelIndex - firstLevelIndex) + 1;
@@ -102,5 +102,18 @@ public class SceneLoader
             sceneName = System.IO.Path.GetFileNameWithoutExtension(pathToScene);
             _buildIndexScenesNames.Add(sceneName);
         }
+    }
+
+    private int GetFirstLevelIndex()
+    {
+        for (int i = 0; i < _buildIndexScenesNames.Count; i++)
+        {
+            if (_buildIndexScenesNames[i].Equals(Constants.FIRST_LEVEL_NAME))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

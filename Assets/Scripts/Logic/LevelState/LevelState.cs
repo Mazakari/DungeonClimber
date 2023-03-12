@@ -5,7 +5,7 @@ public class LevelState : MonoBehaviour
 {
     private bool _levelStarted = false;
 
-    private ChestKeyPanel _chestKeyPanel;
+    [SerializeField] private ChestKeyPanel _chestKeyPanel;
     private TreasureChest _treasureChest;
 
     // 'event' Can't be invoked from other class
@@ -14,14 +14,13 @@ public class LevelState : MonoBehaviour
 
     // Can be invoked from other class
     /// <summary>
-    /// Show level results popup. Pass is player got artifact from the chest
+    /// Show level results popup. Pass false if player got artifact from the chest. 
     /// </summary>
     public static Action<bool> OnLevelResultShow;
 
     
     private void OnEnable()
     {
-        _chestKeyPanel = FindObjectOfType<ChestKeyPanel>();
         _treasureChest = FindObjectOfType<TreasureChest>();
 
         FinishPlatform.OnLevelFinish += OnLevelFinish;
@@ -51,18 +50,8 @@ public class LevelState : MonoBehaviour
 
         Debug.Log("Treasure keys not collected!");
         // Send callback to LevelCanvas to show level complete popup
-        OnLevelResultShow?.Invoke(false);
+        OnLevelResultShow?.Invoke(true);
     }
-
-    //private void SaveLevelResults()
-    //{
-    //    string levelToSave = Services.SceneLoaderService.GetNextLevelName();
-    //    Services.SaveLoadService.SaveLevel(levelToSave);
-    //    Debug.Log($"Saving {levelToSave}");
-
-    //    // TO DO save level artifact state locked / unlocked
-    //    // if it's unlocked do nothing, otherwise way save it's state
-    //}
 
     private void ReadClickOnStartInput()
     {

@@ -19,6 +19,8 @@ public class BootstrapState : IState
 
     public void Enter()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         // TO DO Unity bug with GetSceneByBuildIndex() Init scene names manualy
         _sceneLoader.GetBuildNamesFromBuildSettings();
 
@@ -42,8 +44,7 @@ public class BootstrapState : IState
         _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
         _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
         _services.RegisterSingle<ITimeService>(new TimeService());
-        //_services.RegisterSingle<IShopService>(new ShopService());
-        //_services.RegisterSingle<ISkinsService>(new SkinsService());
+        _services.RegisterSingle<ILevelCellsService>(new LevelCellsService(_services.Single<IGameFactory>(), _sceneLoader));
         //_services.RegisterSingle<IAudioService>(new AudioService(_volumeControl));
     }
 }

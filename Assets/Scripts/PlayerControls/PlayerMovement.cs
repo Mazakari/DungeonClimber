@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private bool _keyboardControls;
-
     void Update()
     {
         MoveLauncher();

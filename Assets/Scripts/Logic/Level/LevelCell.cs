@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class LevelCell : MonoBehaviour
     [SerializeField] private GameObject _lockedState;
 
     private int _levelNumber = 0;
+    public int LevelNumber => _levelNumber;
 
     private string _levelSceneName = string.Empty;
     public string LevelSceneName => _levelSceneName;
@@ -28,6 +30,17 @@ public class LevelCell : MonoBehaviour
 
     private bool _artifactLocked;
     public bool ArtifactLocked => _artifactLocked;
+
+    public static event Action<string> OnLevelCellPress;
+
+    public void SaveCompletedLevel(bool artifactLocked)
+    {
+        _levelLocked = false;
+        _artifactLocked = artifactLocked;
+    }
+
+    public void UnlockLevel() => 
+        _levelLocked = false;
 
     public void InitLevelCell(int levelNumber, string levelName, bool levelLocked, Sprite artifactSprite, bool artifactLocked)
     {
@@ -54,6 +67,6 @@ public class LevelCell : MonoBehaviour
         _artifactState.SetActive(_artifactLocked);
     }
 
-    //public void LoadButtonLevel() => 
-    //    Services.SceneLoaderService.LoadLevel(_levelSceneName);
+    public void LoadButtonLevel() =>
+        OnLevelCellPress?.Invoke(_levelSceneName);
 }
