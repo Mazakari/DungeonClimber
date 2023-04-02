@@ -3,7 +3,7 @@ using UnityEngine;
 public class BouncePlatform : MonoBehaviour
 {
     [SerializeField] private int _playerLayer;
-    [SerializeField] private int _maxPplatformHealth = 1;
+    [SerializeField] private int _maxPlatformHealth = 1;
     private int _curPlatformHealth = 1;
 
     [SerializeField] private float _bounceForce = 1f;
@@ -39,12 +39,12 @@ public class BouncePlatform : MonoBehaviour
     private void UpdatePlatformHealth()
     {
         _curPlatformHealth -= 1;
-        _curPlatformHealth = Mathf.Clamp(_curPlatformHealth, 0, _maxPplatformHealth);
+        _curPlatformHealth = Mathf.Clamp(_curPlatformHealth, 0, _maxPlatformHealth);
     }
 
     private void TurnOffBouncer() => 
         gameObject.SetActive(false);
 
     private void InitPlatformHealth() => 
-        _curPlatformHealth = _maxPplatformHealth;
+        _curPlatformHealth = _maxPlatformHealth;
 }
