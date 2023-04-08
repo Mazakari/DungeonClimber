@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328390249667828389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.39, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +53,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.27957034}
+  m_Offset: {x: 0.000000059604645, y: -0.015805483}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -64,7 +64,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4599383, y: 2.1273007}
+  m_Size: {x: 1, y: 2.5}
   m_EdgeRadius: 0
 --- !u!50 &1328390249667828443
 Rigidbody2D:
@@ -127,10 +127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 6444180239025238990}
-  _playerJumpUpSprite: {fileID: 21300000, guid: 6d8e45da9d8b33e408a42c26c977adb4, type: 3}
-  _playerFallDownSprite: {fileID: 21300000, guid: 7584898c9e3dffc429544ee14d2350f7, type: 3}
-  _playerHangingSprite: {fileID: 0}
-  _playerWinSprite: {fileID: 0}
+  _playerJumpUpSprite: {fileID: 21300000, guid: 539848c5162709344975aeba469bb93c, type: 3}
+  _playerFallDownSprite: {fileID: 21300000, guid: 51bcb6f38fc31d84eae1bb2c6f43370a, type: 3}
+  _playerHangingSprite: {fileID: 21300000, guid: ca9b081b159bc4c42a62430feb8f3e4c, type: 3}
+  _playerWinSprite: {fileID: 21300000, guid: d240b8a0bc454644c97d2f80d9cf5b89, type: 3}
 --- !u!114 &1341290663859566339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 3484549711564995488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1328390249667828447}
@@ -243,12 +243,12 @@ SpriteRenderer:
   m_SortingLayerID: -881802591
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7584898c9e3dffc429544ee14d2350f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca9b081b159bc4c42a62430feb8f3e4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.12, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

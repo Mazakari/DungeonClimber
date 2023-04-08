@@ -56,7 +56,8 @@ public class LevelCell : MonoBehaviour
         _artifactSprite = artifactSprite;
         _artifactLocked = artifactLocked;
 
-        _levelNumberText.text = _levelSceneName;
+        _levelNumberText.text = _levelNumber.ToString();
+        //_levelNumberText.text = _levelSceneName;
         _lockedState.SetActive(_levelLocked);
     }
 
