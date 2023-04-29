@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,35 +15,44 @@ public class SettingsPopup : MonoBehaviour
     private ISaveLoadService _saveLoadService;
     private VolumeControl _volumeControl;
 
-    // TO DO save audio settings or OnDisable?
-    [SerializeField] private Button _backButon;
+    public static event Action OnSettingsSaved;
 
     private void OnEnable()
     {
         _volumeControl = FindObjectOfType<VolumeControl>();
         _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
 
-        _musicVolumeSlider.onValueChanged.AddListener(HandleMusicVolume);
-        _musicToggle.onValueChanged.AddListener(HandleMusicToggle);
-
-        _soundsVolumeSlider.onValueChanged.AddListener(HandleSoundsVolume);
-        _soundsToggle.onValueChanged.AddListener(HandleSoundsToggle);
-
-        _backButon.onClick.AddListener(SaveAudioSettings);
+        SubscribeSlidersValueChangeCallbacks();
 
         // load UI values from _audioService.VolumeControl.settings
         LoadAudioSettings();
     }
 
-    private void OnDisable()
+    private void OnDisable() => 
+        UnsubscribeSlidersValueChangeCallbacks();
+
+    public void SaveAudioSettings()
+    {
+        _saveLoadService.SaveProgress();
+        OnSettingsSaved?.Invoke();
+    }
+
+    private void SubscribeSlidersValueChangeCallbacks()
+    {
+        _musicVolumeSlider.onValueChanged.AddListener(HandleMusicVolume);
+        _musicToggle.onValueChanged.AddListener(HandleMusicToggle);
+
+        _soundsVolumeSlider.onValueChanged.AddListener(HandleSoundsVolume);
+        _soundsToggle.onValueChanged.AddListener(HandleSoundsToggle);
+    }
+
+    private void UnsubscribeSlidersValueChangeCallbacks()
     {
         _musicVolumeSlider.onValueChanged.RemoveAllListeners();
         _musicToggle.onValueChanged.RemoveAllListeners();
 
         _soundsVolumeSlider.onValueChanged.RemoveAllListeners();
         _soundsToggle.onValueChanged.RemoveAllListeners();
-
-        _backButon.onClick.RemoveAllListeners();
     }
 
     private void HandleMusicVolume(float value)
@@ -72,6 +82,5 @@ public class SettingsPopup : MonoBehaviour
         _soundsToggle.isOn = _volumeControl.SoundsOn;
     }
 
-    private void SaveAudioSettings() =>
-       _saveLoadService.SaveProgress();
+    
 }

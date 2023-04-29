@@ -86,21 +86,21 @@ public class VolumeControl : MonoBehaviour, ISavedProgress
 
     public void UpdateProgress(PlayerProgress progress)
     {
-        //progress.gameData.musicVolume = MusicVolume;
-        //progress.gameData.musicToggle = MusicOn;
+        progress.gameData.musicVolume = MusicVolume;
+        progress.gameData.musicToggle = MusicOn;
 
-        //progress.gameData.soundVolume = SoundsVolume;
-        //progress.gameData.soundToggle = SoundsOn;
+        progress.gameData.soundVolume = SoundsVolume;
+        progress.gameData.soundToggle = SoundsOn;
     }
 
     public void LoadProgress(PlayerProgress progress)
     {
-        //MusicVolume = progress.gameData.musicVolume;
-        //MusicOn = progress.gameData.musicToggle;
+        MusicVolume = progress.gameData.musicVolume;
+        MusicOn = progress.gameData.musicToggle;
         _audioMixer.SetFloat(_musicVolumeParameter, Mathf.Log10(MusicVolume) * _multiplier);
 
-        //SoundsVolume = progress.gameData.soundVolume;
-        //SoundsOn = progress.gameData.soundToggle;
+        SoundsVolume = progress.gameData.soundVolume;
+        SoundsOn = progress.gameData.soundToggle;
         _audioMixer.SetFloat(_soundsVolumeParameter, Mathf.Log10(SoundsVolume) * _multiplier);
 
         if (!MusicOn)

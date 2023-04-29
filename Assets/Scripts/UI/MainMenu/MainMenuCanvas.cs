@@ -1,19 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using static GameMetaData;
 
 public class MainMenuCanvas : MonoBehaviour, ISavedProgress
 {
-    [Header("Buttons")]
-    [SerializeField] private Button _startGameButton;
-    [SerializeField] private Button _selectLevelsButton;
-    [SerializeField] private Button _quitGameButton;
-
     [Header("Level Selection Popup")]
     [Space(10)]
     [SerializeField] private GameObject _levelSelectionPopup;
     [SerializeField] private Transform _levelSelectionContent;
+
+    [Header("Settings Popup")]
+    [Space(10)]
+    [SerializeField] private GameObject _settingsPopup;
 
     private ILevelCellsService _levelCellsService;
 
@@ -22,21 +20,16 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     {
         _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
 
-        _levelSelectionPopup.SetActive(false);
-        _quitGameButton.onClick.AddListener(QuitGame);
+        SettingsPopup.OnSettingsSaved += HideSettingsPopup;
+
+        InitPopups();
     }
 
-    private void Start()
-    {
-        //_levelCellsService = AllServices.Container.Single<ILevelCellsService>();
+    private void Start() => 
         InitLevelsSelectionPopup();
-    }
 
-    private void OnDisable()
-    {
-        _startGameButton.onClick.RemoveAllListeners();
-        _quitGameButton.onClick.RemoveAllListeners();
-    }
+    private void OnDisable() => 
+        SettingsPopup.OnSettingsSaved -= HideSettingsPopup;
 
     public void ShowSelectLevelsPopup() => 
         _levelSelectionPopup.SetActive(true);
@@ -44,8 +37,20 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     public void HideSelectLevelsPopup() => 
         _levelSelectionPopup.SetActive(false);
 
-    private void QuitGame() => 
+    public void ShowSettingsPopup() =>
+        _settingsPopup.SetActive(true);
+
+    public void QuitGame() => 
         Application.Quit();
+
+    private void HideSettingsPopup() =>
+        _settingsPopup.SetActive(false);
+
+    private void InitPopups()
+    {
+        _levelSelectionPopup.SetActive(false);
+        _settingsPopup.SetActive(false);
+    }
 
     private void InitLevelsSelectionPopup()
     {

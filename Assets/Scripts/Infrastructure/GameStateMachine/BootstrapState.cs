@@ -5,21 +5,19 @@ public class BootstrapState : IState
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
-    //private readonly VolumeControl _volumeControl;
 
     public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
         _services = services;
-        //_volumeControl = volumeControl;
 
         RegisterServices();
     }
 
     public void Enter()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        SetFpsTarget();
 
         // TO DO Unity bug with GetSceneByBuildIndex() Init scene names manualy
         _sceneLoader.GetBuildNamesFromBuildSettings();
@@ -31,10 +29,7 @@ public class BootstrapState : IState
     private void EnterLoadLevel() =>
         _gameStateMachine.Enter<LoadProgressState>();
 
-    public void Exit()
-    {
-
-    }
+    public void Exit() {}
 
     private void RegisterServices()
     {
@@ -45,6 +40,9 @@ public class BootstrapState : IState
         _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
         _services.RegisterSingle<ITimeService>(new TimeService());
         _services.RegisterSingle<ILevelCellsService>(new LevelCellsService(_services.Single<IGameFactory>(), _sceneLoader));
-        //_services.RegisterSingle<IAudioService>(new AudioService(_volumeControl));
     }
+
+    // System Settings
+    private void SetFpsTarget() =>
+        Application.targetFrameRate = 120;
 }
