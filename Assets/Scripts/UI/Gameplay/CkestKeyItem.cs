@@ -10,13 +10,8 @@ public class CkestKeyItem : MonoBehaviour
     public bool IsCollected { get; private set; } = false;
     public KeyType Type => _type;
 
-    private void OnEnable()
-    {
-        if (_keyImage)
-        {
-            InitItem();
-        }
-    }
+    private void OnEnable() => 
+        HideCollectedKeyImage();
 
     public void ShowKey()
     {
@@ -24,14 +19,20 @@ public class CkestKeyItem : MonoBehaviour
         SwitchKeyVisibilityState(IsCollected);
     }
 
+    //private void InitItem()
+    //{
+    //    if (!IsCollected)
+    //    {
+    //        SwitchKeyVisibilityState(IsCollected);
+    //        return;
+    //    }
+
+    //    SwitchKeyVisibilityState(IsCollected);
+    //}
+
     private void InitItem()
     {
-        if (!IsCollected)
-        {
-            SwitchKeyVisibilityState(IsCollected);
-            return;
-        }
-
+        IsCollected = false;
         SwitchKeyVisibilityState(IsCollected);
     }
 
@@ -41,6 +42,14 @@ public class CkestKeyItem : MonoBehaviour
         {
             _keySilouhetteImage.gameObject.SetActive(!isKeyCollected);
             _keyImage.gameObject.SetActive(isKeyCollected);
+        }
+    }
+
+    private void HideCollectedKeyImage()
+    {
+        if (_keyImage)
+        {
+            InitItem();
         }
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 public class FinishPlatform : MonoBehaviour
 {
     [SerializeField] private int _playerLayer;
-    [SerializeField] private BoxCollider2D _platformCollider;
-    private float _playerMinYOffset = 0.5f;
 
     public static event Action OnLevelFinish;
 
@@ -13,7 +11,7 @@ public class FinishPlatform : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == _playerLayer)
         {
-            if (PlayerAbovePlatform(collision.collider))
+            if (PlayerAbovePlatform(collision.gameObject.transform))
             {
                 Debug.Log("Finish");
 
@@ -24,11 +22,11 @@ public class FinishPlatform : MonoBehaviour
         }
     }
 
-    private bool PlayerAbovePlatform(Collider2D player)
+    private bool PlayerAbovePlatform(Transform player)
     {
-        float playerMinY = Mathf.Abs(player.bounds.min.y) + _playerMinYOffset;
-        float platformMaxY = Mathf.Abs(_platformCollider.bounds.max.y);
+        float playerYPosition = player.position.y;
+        float platformYPosition = transform.position.y;
 
-        return playerMinY > platformMaxY;
+        return playerYPosition > platformYPosition;
     }
 }

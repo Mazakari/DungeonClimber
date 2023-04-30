@@ -7,8 +7,6 @@ public class BouncePlatform : MonoBehaviour
     private int _curPlatformHealth = 1;
 
     [SerializeField] private float _bounceForce = 1f;
-    [SerializeField] private BoxCollider2D _platformCollider;
-    private float _playerMinYOffset = 0.5f;
 
     private Rigidbody2D _playerRigidbody2D;
 
@@ -24,7 +22,7 @@ public class BouncePlatform : MonoBehaviour
                 _playerRigidbody2D = collision.collider.gameObject.GetComponent<Rigidbody2D>();
             }
 
-            if (PlayerAbovePlatform(collision.collider))
+            if (PlayerAbovePlatform(collision.gameObject.transform))
             {
                 BounceUp(_playerRigidbody2D);
                 UpdatePlatformHealth();
@@ -52,11 +50,11 @@ public class BouncePlatform : MonoBehaviour
     private void InitPlatformHealth() => 
         _curPlatformHealth = _maxPlatformHealth;
 
-    private bool PlayerAbovePlatform(Collider2D player)
+    private bool PlayerAbovePlatform(Transform player)
     {
-        float playerMinY = Mathf.Abs(player.bounds.min.y) + _playerMinYOffset;
-        float platformMaxY = Mathf.Abs(_platformCollider.bounds.max.y);
+        float playerYPosition = player.position.y;
+        float platformYPosition = transform.position.y;
 
-        return playerMinY > platformMaxY;
+        return playerYPosition > platformYPosition;
     }
 }
