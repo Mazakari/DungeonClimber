@@ -157,3 +157,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerLayer: 6
+  _platformCollider: {fileID: 6847847222072137483}

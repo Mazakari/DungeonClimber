@@ -7,8 +7,10 @@ public class BouncePlatform : MonoBehaviour
     private int _curPlatformHealth = 1;
 
     [SerializeField] private float _bounceForce = 1f;
+    [SerializeField] private BoxCollider2D _platformCollider;
+    private float _playerMinYOffset = 0.5f;
 
-    private Rigidbody2D _rb;
+    private Rigidbody2D _playerRigidbody2D;
 
     private void Start() => 
         InitPlatformHealth();
@@ -17,20 +19,22 @@ public class BouncePlatform : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == _playerLayer)
         {
-            if (_rb == null)
+            if (_playerRigidbody2D == null)
             {
-                _rb = collision.collider.gameObject.GetComponent<Rigidbody2D>();
+                _playerRigidbody2D = collision.collider.gameObject.GetComponent<Rigidbody2D>();
             }
 
-            BounceUp(_rb);
-            UpdatePlatformHealth();
-
-            if (_curPlatformHealth == 0)
+            if (PlayerAbovePlatform(collision.collider))
             {
-                TurnOffBouncer();
+                BounceUp(_playerRigidbody2D);
+                UpdatePlatformHealth();
+
+                if (_curPlatformHealth == 0)
+                {
+                    TurnOffBouncer();
+                }
             }
         }
-
     }
 
     private void BounceUp(Rigidbody2D rb) => 
@@ -47,4 +51,12 @@ public class BouncePlatform : MonoBehaviour
 
     private void InitPlatformHealth() => 
         _curPlatformHealth = _maxPlatformHealth;
+
+    private bool PlayerAbovePlatform(Collider2D player)
+    {
+        float playerMinY = Mathf.Abs(player.bounds.min.y) + _playerMinYOffset;
+        float platformMaxY = Mathf.Abs(_platformCollider.bounds.max.y);
+
+        return playerMinY > platformMaxY;
+    }
 }
