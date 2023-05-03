@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b9355ef5480bceb4d80aedcc79dffab1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.96534353, b: 0.6084906, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -158,5 +158,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerLayer: 6
   _maxPlatformHealth: 2
-  _bounceForce: 20
-  _platformCollider: {fileID: 4052915555674890280}
+  _bounceForce: 25

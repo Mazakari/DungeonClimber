@@ -29,15 +29,19 @@ public class GameLoopState : IState
 
         GameplayCanvas.OnMainMenuButton += LoadMainMenu;
         GameplayCanvas.OnNextLevel += LoadNextLevel;
+
         GameplayCanvas.OnRestartLevel += RestartLevel;
         DeathTrigger.OnDeadZoneEnter += RestartLevel;
+        EnemyCollision.OnEnemyCollision += RestartLevel;
     }
     public void Exit()
     {
         GameplayCanvas.OnMainMenuButton -= LoadMainMenu;
         GameplayCanvas.OnNextLevel -= LoadNextLevel;
+
         GameplayCanvas.OnRestartLevel -= RestartLevel;
         DeathTrigger.OnDeadZoneEnter -= RestartLevel;
+        EnemyCollision.OnEnemyCollision -= RestartLevel;
     }
 
     private void SetLevelNames()

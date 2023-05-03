@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _enemyBody;
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
@@ -14,8 +15,11 @@ public class EnemyMovement : MonoBehaviour
     private float _direction = 1f;
     private bool _moveRight = true;
 
-    void Start() => 
+    void Start()
+    {
+        _spriteRenderer.flipX = _moveRight;
         _enemyBody.position = _pointA.position;
+    }
 
     void Update()
     {
@@ -31,12 +35,19 @@ public class EnemyMovement : MonoBehaviour
         {
             _direction = -1;
             _moveRight = false;
+
+            _spriteRenderer.flipX = _moveRight;
+
         }
         else if (_lerpValue <= 0 && _moveRight == false)
         {
             _direction = 1;
             _moveRight = true;
+
+            _spriteRenderer.flipX = _moveRight;
         }
+
+        
     }
 
     private void LerpPosition() => 
