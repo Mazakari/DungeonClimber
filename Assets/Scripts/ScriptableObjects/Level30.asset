@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b3fae71ef2a66943bc722eb5995859c, type: 3}
-  m_Name: Level25
+  m_Name: Level30
   m_EditorClassIdentifier: 
-  _levelSceneName: Level25
+  _levelSceneName: Level30
   _levelLocked: 1
   _levelArtifactSprite: {fileID: 21300000, guid: c4508198b6e3d4a4893fbfd40b5ec6af, type: 3}
   _artifactLocked: 1
