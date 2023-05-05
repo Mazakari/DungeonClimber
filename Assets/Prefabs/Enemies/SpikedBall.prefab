@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyBody: {fileID: 1993025048535000771}
   _angle: 90
-  _speed: 0.1
+  _speed: 1
   _animationCurve:
     serializedVersion: 2
     m_Curve:

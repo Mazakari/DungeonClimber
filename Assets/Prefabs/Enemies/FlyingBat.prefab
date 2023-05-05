@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 7618406360346413290}
   - component: {fileID: 7618406360346413291}
   m_Layer: 0
-  m_Name: MovingEnemy
+  m_Name: FlyingBat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
