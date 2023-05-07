@@ -10,6 +10,10 @@ public class LevelCompletePopup : MonoBehaviour
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _restartButton;
 
+    [Space(10)]
+    [Header("Audio")]
+    [SerializeField] private ItemSound _itemSound;
+
     private ISaveLoadService _saveLoadService;
     
 
@@ -22,6 +26,8 @@ public class LevelCompletePopup : MonoBehaviour
 
         // SaveProgress
         _saveLoadService.SaveProgress();
+
+        _itemSound.Play();
     }
 
     private void RestartLevel() => 

@@ -10,6 +10,10 @@ public class BouncePlatform : MonoBehaviour
 
     private Rigidbody2D _playerRigidbody2D;
 
+    [Space(10)]
+    [Header("Audio")]
+    [SerializeField] private ItemSound _itemSound;
+
     private void Start() => 
         InitPlatformHealth();
 
@@ -26,6 +30,8 @@ public class BouncePlatform : MonoBehaviour
             {
                 BounceUp(_playerRigidbody2D);
                 UpdatePlatformHealth();
+
+                _itemSound.Play();
 
                 if (_curPlatformHealth == 0)
                 {

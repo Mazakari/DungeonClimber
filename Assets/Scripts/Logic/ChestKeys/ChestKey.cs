@@ -16,6 +16,10 @@ public class ChestKey : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _sprite;
 
+    [Space(10)]
+    [Header("Audio")]
+    [SerializeField] private ItemSound _itemSound;
+
     public static event Action<KeyType> OnKeyPickup;
 
     private void OnEnable() => 
@@ -26,6 +30,8 @@ public class ChestKey : MonoBehaviour
         if (collider.gameObject.layer == _playerLayer)
         {
             gameObject.SetActive(false);
+
+            _itemSound.Play();
 
             // Callback for ChestKeyPanel
             OnKeyPickup?.Invoke(_type);

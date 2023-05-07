@@ -16,6 +16,10 @@ public class TreasureChest : MonoBehaviour
 
     private float _lockUnlockDelay = 1f;
 
+    [Space(10)]
+    [Header("Audio")]
+    [SerializeField] private ItemSound _itemSound;
+
     private void OnEnable() => 
         InitChest();
 
@@ -53,6 +57,8 @@ public class TreasureChest : MonoBehaviour
 
             yield return new WaitForSeconds(_lockUnlockDelay);
             _treasureChestTrophy.enabled = true;
+
+            _itemSound.Play();
 
             yield return new WaitForSeconds(_lockUnlockDelay);
             chestUnlocked = true;

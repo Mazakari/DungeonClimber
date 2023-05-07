@@ -5,6 +5,10 @@ public class FinishPlatform : MonoBehaviour
 {
     [SerializeField] private int _playerLayer;
 
+    [Space(10)]
+    [Header("Audio")]
+    [SerializeField] private ItemSound _itemSound;
+
     public static event Action OnLevelFinish;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -14,6 +18,8 @@ public class FinishPlatform : MonoBehaviour
             if (PlayerAbovePlatform(collision.gameObject.transform))
             {
                 Debug.Log("Finish");
+
+                _itemSound.Play();
 
                 // Callback for LevelState
                 OnLevelFinish?.Invoke();
