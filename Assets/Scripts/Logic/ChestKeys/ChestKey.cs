@@ -16,6 +16,8 @@ public class ChestKey : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _sprite;
 
+    [SerializeField] private Collider2D _collider;
+
     [Space(10)]
     [Header("Audio")]
     [SerializeField] private ItemSound _itemSound;
@@ -29,14 +31,15 @@ public class ChestKey : MonoBehaviour
     {
         if (collider.gameObject.layer == _playerLayer)
         {
-            gameObject.SetActive(false);
 
-            _itemSound.Play();
-
+            PlayItemSound();
             // Callback for ChestKeyPanel
             OnKeyPickup?.Invoke(_type);
+
+            DeactivateKey();
         }
     }
+
     private void SetSprite()
     {
         if (_sprite == null || _spriteRenderer == null)
@@ -46,5 +49,19 @@ public class ChestKey : MonoBehaviour
         }
 
         _spriteRenderer.sprite = _sprite;
+    }
+
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
+        }
+    }
+
+    private void DeactivateKey()
+    {
+        _collider.enabled = false;
+        _spriteRenderer.enabled = false;
     }
 }

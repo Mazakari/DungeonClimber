@@ -14,7 +14,7 @@ public class LevelState : MonoBehaviour
 
     // Can be invoked from other class
     /// <summary>
-    /// Show level results popup. Pass false if player got artifact from the chest. 
+    /// Show level results popup. Pass true if artifact is locked on level complete. 
     /// </summary>
     public static Action<bool> OnLevelResultShow;
 
@@ -37,10 +37,6 @@ public class LevelState : MonoBehaviour
 
     private void OnLevelFinish()
     {
-        //SaveLevelResults();
-        // TO DO save artifact state
-
-        // check if all key being collected
         if (_chestKeyPanel.CheckKeysCollection())
         {
             Debug.Log("Open treasure chest!");
@@ -49,7 +45,7 @@ public class LevelState : MonoBehaviour
         }
 
         Debug.Log("Treasure keys not collected!");
-        // Send callback to LevelCanvas to show level complete popup
+        // Send callback to LevelCanvas to show level complete popup with artifact locked true parameter
         OnLevelResultShow?.Invoke(true);
     }
 

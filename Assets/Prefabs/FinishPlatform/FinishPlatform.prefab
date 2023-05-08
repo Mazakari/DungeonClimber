@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerLayer: 6
-  _platformSound: {fileID: 878495190440714052}
+  _itemSound: {fileID: 878495190440714052}
 --- !u!82 &8780311523882328513
 AudioSource:
   m_ObjectHideFlags: 0
@@ -170,9 +170,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -4073783453917660035, guid: 8b039cb3ce8eb8e4a84bef6741ee4532, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: fe40828bc18486940a1b188b70a13a51, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

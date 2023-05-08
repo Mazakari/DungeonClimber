@@ -15,7 +15,7 @@ public class GameMetaData
         public bool locked;
 
         public Sprite artifactSprite;
-        public bool artifactLocked;
+        public bool artefactLocked;
     }
 
     public List<LevelCellsData> levels;

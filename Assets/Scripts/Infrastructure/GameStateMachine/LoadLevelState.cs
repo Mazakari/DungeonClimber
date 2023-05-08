@@ -8,15 +8,17 @@ public class LoadLevelState : IPayloadedState<string>
     private readonly LoadingCurtain _curtain;
     private readonly IGameFactory _gameFactory;
     private readonly IPersistentProgressService _progressService;
-    
+    private readonly ILevelCellsService _levelCellsService;
 
-    public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService)
+
+    public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService, ILevelCellsService levelCellsService)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
         _curtain = curtain;
         _gameFactory = gameFactory;
         _progressService = progressService;
+        _levelCellsService = levelCellsService;
     }
 
 
@@ -54,6 +56,10 @@ public class LoadLevelState : IPayloadedState<string>
         GameObject spawnPos = GameObject.FindGameObjectWithTag(Constants.PLAYER_SPAWN_POINT_TAG);
         GameObject player = _gameFactory.CreatePlayer(spawnPos);
 
+        _levelCellsService.SetCurrentCell();
+
+        InitTreasureChest();
+
         _gameFactory.CreateLevelHud();
 
         Transform followTransform = player.GetComponent<Transform>();
@@ -64,5 +70,14 @@ public class LoadLevelState : IPayloadedState<string>
     {
         CinemachineVirtualCamera cam = Object.FindObjectOfType<CinemachineVirtualCamera>();
         cam.Follow = player;
+    }
+
+    private static void InitTreasureChest()
+    {
+        TreasureChest chest = Object.FindObjectOfType<TreasureChest>();
+        if (chest)
+        {
+            chest.InitChest();
+        }
     }
 }

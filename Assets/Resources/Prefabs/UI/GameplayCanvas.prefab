@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _LevelCompletePopup: {fileID: 5527846683744342969}
+  _levelArtifactImage: {fileID: 7343487006899733122}
   _mainMenuButton: {fileID: 5381140692132708909}
   _levelDisplay: {fileID: 1956700094849059704}
 --- !u!82 &8374497352899442307
@@ -182,11 +183,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2867517540678359602, guid: 8b039cb3ce8eb8e4a84bef6741ee4532, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9669960e415ea604d81fb0784634df79, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -745,6 +746,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6272ec33a011b049802dd734b070ff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7343487006899733122 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6466965879936408188, guid: 8dc0333b87b8e4244abb70370c4da8de, type: 3}
+  m_PrefabInstance: {fileID: 4347673151100606718}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9056687879585281405

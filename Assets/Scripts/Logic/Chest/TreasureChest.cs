@@ -16,12 +16,14 @@ public class TreasureChest : MonoBehaviour
 
     private float _lockUnlockDelay = 1f;
 
+    private ILevelCellsService _levelCellsService;
+
     [Space(10)]
     [Header("Audio")]
     [SerializeField] private ItemSound _itemSound;
 
     private void OnEnable() => 
-        InitChest();
+        _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
 
     private void OnDisable() => 
         StopCoroutine(ChestOpenCoroutine());
@@ -29,18 +31,29 @@ public class TreasureChest : MonoBehaviour
     public void OpenChest() => 
         StartCoroutine(ChestOpenCoroutine());
 
-    private void InitChest()
+    public void InitChest()
     {
-        _treasureChestTrophy.enabled = false;
+        InitArtifactSprite();
+        SetChestSpriteToClosedState();
+        EnableAllChestKeySprites();
+    }
 
-        _closedTreasureChest.enabled = true;
-        _openedTreasureChest.enabled = false;
-
+    private void EnableAllChestKeySprites()
+    {
         _redTreasureChestLock.enabled = true;
         _greenTreasureChestLock.enabled = true;
         _blueTreasureChestLock.enabled = true;
     }
-
+    private void SetChestSpriteToClosedState()
+    {
+        _closedTreasureChest.enabled = true;
+        _openedTreasureChest.enabled = false;
+    }
+    private void InitArtifactSprite()
+    {
+        _treasureChestTrophy.sprite = _levelCellsService.Current.ArtifactSprite;
+        _treasureChestTrophy.enabled = false;
+    }
     private IEnumerator ChestOpenCoroutine()
     {
         bool chestUnlocked = false;
@@ -58,15 +71,21 @@ public class TreasureChest : MonoBehaviour
             yield return new WaitForSeconds(_lockUnlockDelay);
             _treasureChestTrophy.enabled = true;
 
-            _itemSound.Play();
+            PlayItemSound();
 
             yield return new WaitForSeconds(_lockUnlockDelay);
             chestUnlocked = true;
-            // Send callback to LevelCanvas to open level complete popup with artifact locked bool parameter
+            // Send callback to LevelCanvas to open level complete popup with artifactLocked bool parameter
             LevelState.OnLevelResultShow?.Invoke(false);
         }
 
         yield break;
     }
-
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
+        }
+    }
 }

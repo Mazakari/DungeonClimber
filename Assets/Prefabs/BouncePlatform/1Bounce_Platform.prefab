@@ -161,6 +161,8 @@ MonoBehaviour:
   _playerLayer: 6
   _maxPlatformHealth: 1
   _bounceForce: 25
+  _collider: {fileID: 4052915555674890280}
+  _platform: {fileID: 2133931466751454212}
   _itemSound: {fileID: 5670139372184448562}
 --- !u!82 &3528079963635842124
 AudioSource:
@@ -172,9 +174,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -4073783453917660035, guid: 8b039cb3ce8eb8e4a84bef6741ee4532, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5d4930ae43dbd2d40a6e5c2994c25a9f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -271,4 +273,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 3528079963635842124}
-  _pitchSound: 0
+  _pitchSound: 1

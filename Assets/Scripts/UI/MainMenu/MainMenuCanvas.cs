@@ -60,8 +60,11 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
         }
     }
 
-    public void UpdateProgress(PlayerProgress progress) => 
-        CopyProgress(_levelCellsService.Levels, progress.gameData.levels);
+    public void UpdateProgress(PlayerProgress progress)
+    {
+        //CopyProgress(_levelCellsService.Levels, progress.gameData.levels);
+    }
+
 
     public void LoadProgress(PlayerProgress progress)
     {
@@ -81,7 +84,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
                 locked = progress.gameData.levels[i].locked;
 
                 sprite = progress.gameData.levels[i].artifactSprite;
-                artifactLocked = progress.gameData.levels[i].artifactLocked;
+                artifactLocked = progress.gameData.levels[i].artefactLocked;
                 
 
                 _levelCellsService.Levels[i].InitLevelCell(number, name, locked, sprite, artifactLocked);
@@ -89,21 +92,21 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
         }
     }
 
-    private void CopyProgress(LevelCell[] source, List<LevelCellsData> target)
-    {
-        target.Clear();
+    //private void CopyProgress(LevelCell[] source, List<LevelCellsData> target)
+    //{
+    //    target.Clear();
 
-        for (int i = 0; i < source.Length; i++)
-        {
-            LevelCellsData data;
-            data.number = source[i].LevelNumber;
-            data.locked = source[i].LevelLocked;
-            data.sceneName = source[i].LevelSceneName;
+    //    for (int i = 0; i < source.Length; i++)
+    //    {
+    //        LevelCellsData data;
+    //        data.number = source[i].LevelNumber;
+    //        data.locked = source[i].LevelLocked;
+    //        data.sceneName = source[i].LevelSceneName;
 
-            data.artifactSprite = source[i].ArtifactSprite;
-            data.artifactLocked = source[i].ArtifactLocked;
+    //        data.artifactSprite = source[i].ArtifactSprite;
+    //        data.artifactLocked = source[i].ArtifactLocked;
 
-            target.Add(data);
-        }
-    }
+    //        target.Add(data);
+    //    }
+    //}
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelSceneName: Level28
   _levelLocked: 1
-  _levelArtifactSprite: {fileID: 21300000, guid: c4508198b6e3d4a4893fbfd40b5ec6af, type: 3}
+  _levelArtifactSprite: {fileID: 21300000, guid: 059a5538fb875a749a1ba8a9c2efd3e3, type: 3}
   _artifactLocked: 1

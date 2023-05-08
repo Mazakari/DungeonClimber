@@ -7,6 +7,8 @@ using static GameMetaData;
 public class GameplayCanvas : MonoBehaviour, ISavedProgress
 {
     [SerializeField] private LevelCompletePopup _LevelCompletePopup;
+    [SerializeField] private Image _levelArtifactImage;
+
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private CurrentLevelDisplay _levelDisplay;
 
@@ -21,7 +23,6 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     private void OnEnable()
     {
         _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
-        _levelCellsService.SetCurrentCell();
 
         _LevelCompletePopup.gameObject.SetActive(false);
 
@@ -29,6 +30,7 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         GameLoopState.OnNextLevelNameSet += UpdateNextLevel;
 
         UpdateLevelDisplay();
+       
     }
 
     private void OnDisable()
@@ -37,14 +39,19 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         LevelState.OnLevelResultShow -= ShowLevelCompletePopup;
     }
 
-    private void ShowLevelCompletePopup(bool showArtifact)
+    private void ShowLevelCompletePopup(bool artifactLocked)
     {
-        _levelCellsService.SaveCompletedLevel(showArtifact);
+        SetArtifactImage();
+
+        _levelCellsService.SaveCompletedLevel(artifactLocked);
         _levelCellsService.UnlockNextLevel(_nextLevelName);
 
-        _LevelCompletePopup.ShowArtifact(showArtifact);
+        _LevelCompletePopup.ShowArtifact(artifactLocked);
         _LevelCompletePopup.gameObject.SetActive(true);
     }
+
+    private void SetArtifactImage() => 
+        _levelArtifactImage.sprite = _levelCellsService.Current.ArtifactSprite;
 
     // Send callback for GameLoopState
     public void LoadMainMenu() => 
@@ -59,26 +66,26 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     public void UpdateProgress(PlayerProgress progress)
     {
         progress.gameData.nextLevel = _nextLevelName;
-        CopyProgress(_levelCellsService.Levels, progress.gameData.levels);
+        CopyProgress(_levelCellsService.LevelsData, progress.gameData.levels);
     }
 
     public void LoadProgress(PlayerProgress progress) => 
         _nextLevelName = progress.gameData.nextLevel;
 
 
-    private void CopyProgress(LevelCell[] source, List<LevelCellsData> target)
+    private void CopyProgress(LevelCellsData[] source, List<LevelCellsData> target)
     {
         target.Clear();
 
         for (int i = 0; i < source.Length; i++)
         {
             LevelCellsData data;
-            data.number = source[i].LevelNumber;
-            data.locked = source[i].LevelLocked;
-            data.sceneName = source[i].LevelSceneName;
+            data.number = source[i].number;
+            data.locked = source[i].locked;
+            data.sceneName = source[i].sceneName;
 
-            data.artifactSprite = source[i].ArtifactSprite;
-            data.artifactLocked = source[i].ArtifactLocked;
+            data.artifactSprite = source[i].artifactSprite;
+            data.artefactLocked = source[i].artefactLocked;
 
             target.Add(data);
         }

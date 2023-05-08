@@ -7,6 +7,8 @@ public class BouncePlatform : MonoBehaviour
     private int _curPlatformHealth = 1;
 
     [SerializeField] private float _bounceForce = 1f;
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private GameObject _platform;
 
     private Rigidbody2D _playerRigidbody2D;
 
@@ -31,7 +33,7 @@ public class BouncePlatform : MonoBehaviour
                 BounceUp(_playerRigidbody2D);
                 UpdatePlatformHealth();
 
-                _itemSound.Play();
+                PlayItemSound();
 
                 if (_curPlatformHealth == 0)
                 {
@@ -50,8 +52,11 @@ public class BouncePlatform : MonoBehaviour
         _curPlatformHealth = Mathf.Clamp(_curPlatformHealth, 0, _maxPlatformHealth);
     }
 
-    private void TurnOffBouncer() => 
-        gameObject.SetActive(false);
+    private void TurnOffBouncer()
+    {
+        _platform.SetActive(false);
+        _collider.enabled= false;
+    }
 
     private void InitPlatformHealth() => 
         _curPlatformHealth = _maxPlatformHealth;
@@ -62,5 +67,13 @@ public class BouncePlatform : MonoBehaviour
         float platformYPosition = transform.position.y;
 
         return playerYPosition > platformYPosition;
+    }
+
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
+        }
     }
 }

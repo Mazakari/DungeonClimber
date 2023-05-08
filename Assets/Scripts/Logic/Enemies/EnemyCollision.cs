@@ -15,10 +15,19 @@ public class EnemyCollision : MonoBehaviour
     {
         if (collider.gameObject.layer == _playerLayer)
         {
-            _itemSound.Play();
+            PlayItemSound();
+
 
             // Send callback for GameplayState
             OnEnemyCollision?.Invoke();
+        }
+    }
+
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
         }
     }
 }

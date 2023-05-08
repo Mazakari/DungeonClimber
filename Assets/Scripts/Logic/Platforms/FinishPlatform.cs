@@ -19,12 +19,13 @@ public class FinishPlatform : MonoBehaviour
             {
                 Debug.Log("Finish");
 
-                _itemSound.Play();
+                PlayItemSound();
+
 
                 // Callback for LevelState
                 OnLevelFinish?.Invoke();
             }
-               
+
         }
     }
 
@@ -34,5 +35,13 @@ public class FinishPlatform : MonoBehaviour
         float platformYPosition = transform.position.y;
 
         return playerYPosition > platformYPosition;
+    }
+
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
+        }
     }
 }

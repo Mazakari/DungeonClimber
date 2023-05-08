@@ -15,9 +15,18 @@ public class DeathTrigger : MonoBehaviour
     {
         if (collider.gameObject.layer == _playerLayer)
         {
-            _itemSound.Play();
+            PlayItemSound();
+
             // Send callback for GameplayState
             OnDeadZoneEnter?.Invoke();
+        }
+    }
+
+    private void PlayItemSound()
+    {
+        if (_itemSound)
+        {
+            _itemSound.Play();
         }
     }
 }

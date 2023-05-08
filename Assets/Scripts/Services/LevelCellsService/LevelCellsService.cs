@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+using static GameMetaData;
 
 public class LevelCellsService : ILevelCellsService
 {
     private LevelCell[] _levels;
     public LevelCell[] Levels => _levels;
 
+    private LevelCellsData[] _levelsData;
+    public LevelCellsData[] LevelsData => _levelsData;
+
+    private string _currentLevelName;
     public LevelCell Current { get; private set; }
 
     private int _levelsCount;
@@ -26,18 +31,26 @@ public class LevelCellsService : ILevelCellsService
         _levelsCount = _sceneLoader.GetLevelsCount();
 
         _levels = new LevelCell[_levelsCount];
+        _levelsData = new LevelCellsData[_levelsCount];
+
         CreateLevels();
 
         InitLevels();
+        CopyLevelsData();
     }
 
-    public void SaveCompletedLevel(bool artifactLocked) => 
+    public void SaveCompletedLevel(bool artifactLocked)
+    {
         Current.SaveCompletedLevel(artifactLocked);
+        // TEST
+        SaveCompletedLevelData(_currentLevelName, artifactLocked);
+    }
 
     public void SetCurrentCell()
     {
-        string name = _sceneLoader.GetCurrentLevelName();
-        Current = GetCellByName(name);
+        // TEST
+        _currentLevelName = _sceneLoader.GetCurrentLevelName();
+        Current = GetCellByName(_currentLevelName);
     }
 
     public void UnlockNextLevel(string nextLevelName)
@@ -45,6 +58,8 @@ public class LevelCellsService : ILevelCellsService
         LevelCell nextLevel = GetCellByName(nextLevelName);
         nextLevel.UnlockLevel();
 
+        // TEST
+        UnlockNextLevelData(nextLevelName);
     }
 
     private LevelCell GetCellByName(string name)
@@ -92,5 +107,51 @@ public class LevelCellsService : ILevelCellsService
         }
     }
 
-    
+    private void CopyLevelsData()
+    {
+        for (int i = 0; i < _levelsData.Length; i++)
+        {
+            _levelsData[i].number = _levels[i].LevelNumber;
+            _levelsData[i].sceneName = _levels[i].LevelSceneName;
+            _levelsData[i].locked = _levels[i].LevelLocked;
+
+            _levelsData[i].artifactSprite = _levels[i].ArtifactSprite;
+            _levelsData[i].artefactLocked = _levels[i].ArtifactLocked;
+        }
+    }
+   
+    private void SaveCompletedLevelData(string completedLevelName, bool artifactLocked)
+    {
+        int levelDataIndex = GetLevelDataIndex(completedLevelName);
+
+        if (levelDataIndex >= -1)
+        {
+            _levelsData[levelDataIndex].locked = false;
+            _levelsData[levelDataIndex].artefactLocked = artifactLocked;
+        }
+       
+    }
+    private void UnlockNextLevelData(string nextLevelName)
+    {
+        int nextLevelIndex = GetLevelDataIndex(nextLevelName);
+
+        if (nextLevelIndex >= -1)
+        {
+            _levelsData[nextLevelIndex].locked = false;
+        }
+    }
+
+    private int GetLevelDataIndex(string completedLevelName)
+    {
+        int index = -1;
+        for (int i = 0; i < _levelsData.Length; i++)
+        {
+            if (_levelsData[i].sceneName.Equals(completedLevelName))
+            {
+                index = i;
+            }
+        }
+
+        return index;
+    }
 }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class LevelCompletePopup : MonoBehaviour
 {
-    [SerializeField] private Image _artifactLockedImage;
+    [SerializeField] private GameObject _artifactLockedBody;
 
     [Header("Buttons")]
     [Space(10)]
@@ -44,9 +44,9 @@ public class LevelCompletePopup : MonoBehaviour
 
     public void ShowArtifact(bool locked)
     {
-        if (locked)
+        if (!locked)
         {
-            _artifactLockedImage.gameObject.SetActive(false);
+            _artifactLockedBody.SetActive(false);
         }
     }
 
