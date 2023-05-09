@@ -73,10 +73,19 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         _nextLevelName = progress.gameData.nextLevel;
 
 
-    private void CopyProgress(LevelCellsData[] source, List<LevelCellsData> target)
+    private void CopyProgress(LevelCellsData[] source, List<LevelCellsData> targetLevelsData)
     {
-        target.Clear();
+        if (targetLevelsData.Count == 0)
+        {
+            FillProgressWithInitialLevelsData(source, targetLevelsData);
+            return;
+        }
 
+        RewriteCurrentAndNextLevelsData(targetLevelsData);
+    }
+
+    private void FillProgressWithInitialLevelsData(LevelCellsData[] source, List<LevelCellsData> targetLevelsData)
+    {
         for (int i = 0; i < source.Length; i++)
         {
             LevelCellsData data;
@@ -85,9 +94,60 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
             data.sceneName = source[i].sceneName;
 
             data.artifactSprite = source[i].artifactSprite;
-            data.artefactLocked = source[i].artefactLocked;
+            data.artifactLocked = source[i].artifactLocked;
 
-            target.Add(data);
+            targetLevelsData.Add(data);
         }
+    }
+
+    private void UpdateCurrentLevelData(string completedLevelName, List<LevelCellsData> targetLevelsData)
+    {
+        LevelCellsData currentData = FindLevelDataInLevelCellService(completedLevelName);
+
+        for (int i = 0; i < targetLevelsData.Count; i++)
+        {
+            if (targetLevelsData[i].sceneName.Equals(completedLevelName))
+            {
+                if (targetLevelsData[i].artifactLocked == false)
+                {
+                    currentData.artifactLocked = false;
+                }
+
+                targetLevelsData[i] = currentData;
+            }
+        }
+    }
+
+    private void UpdateNextLevelData(string nextLevelName, List<LevelCellsData> targetLevelsData)
+    {
+        LevelCellsData nextLevel = FindLevelDataInLevelCellService(nextLevelName);
+
+        for (int i = 0; i < targetLevelsData.Count; i++)
+        {
+            if (targetLevelsData[i].sceneName.Equals(nextLevelName))
+            {
+                targetLevelsData[i] = nextLevel;
+            }
+        }
+    }
+
+    private LevelCellsData FindLevelDataInLevelCellService(string levelName)
+    {
+        LevelCellsData data = new();
+
+        for (int i = 0; i < _levelCellsService.LevelsData.Length; i++)
+        {
+            if (_levelCellsService.LevelsData[i].sceneName.Equals(levelName))
+            {
+                data = _levelCellsService.LevelsData[i];
+            }
+        }
+
+        return data;
+    }
+    private void RewriteCurrentAndNextLevelsData(List<LevelCellsData> targetLevelsData)
+    {
+        UpdateCurrentLevelData(_levelCellsService.CurrentLevelName, targetLevelsData);
+        UpdateNextLevelData(_nextLevelName, targetLevelsData);
     }
 }

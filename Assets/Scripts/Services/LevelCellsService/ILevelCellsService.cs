@@ -3,6 +3,7 @@
     LevelCell[] Levels { get; }
     LevelCell Current { get; }
     GameMetaData.LevelCellsData[] LevelsData { get; }
+    string CurrentLevelName { get; }
 
     void InitService();
     void SaveCompletedLevel(bool artifactLocked);

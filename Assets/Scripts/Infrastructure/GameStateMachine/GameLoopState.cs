@@ -58,9 +58,6 @@ public class GameLoopState : IState
     private void RestartLevel() =>
         _gameStateMachine.Enter<LoadLevelState, string>(_currentLevelName);
 
-    private void LoadNextLevel()
-    {
-        _saveLoadService.SaveProgress();
+    private void LoadNextLevel() => 
         _gameStateMachine.Enter<LoadLevelState, string>(_nextLevelName);
-    }
 }

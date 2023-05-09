@@ -84,7 +84,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
                 locked = progress.gameData.levels[i].locked;
 
                 sprite = progress.gameData.levels[i].artifactSprite;
-                artifactLocked = progress.gameData.levels[i].artefactLocked;
+                artifactLocked = progress.gameData.levels[i].artifactLocked;
                 
 
                 _levelCellsService.Levels[i].InitLevelCell(number, name, locked, sprite, artifactLocked);

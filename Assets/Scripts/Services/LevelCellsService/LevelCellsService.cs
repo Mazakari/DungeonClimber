@@ -9,7 +9,7 @@ public class LevelCellsService : ILevelCellsService
     private LevelCellsData[] _levelsData;
     public LevelCellsData[] LevelsData => _levelsData;
 
-    private string _currentLevelName;
+    public string CurrentLevelName { get; private set; }
     public LevelCell Current { get; private set; }
 
     private int _levelsCount;
@@ -43,14 +43,14 @@ public class LevelCellsService : ILevelCellsService
     {
         Current.SaveCompletedLevel(artifactLocked);
         // TEST
-        SaveCompletedLevelData(_currentLevelName, artifactLocked);
+        SaveCompletedLevelData(CurrentLevelName, artifactLocked);
     }
 
     public void SetCurrentCell()
     {
         // TEST
-        _currentLevelName = _sceneLoader.GetCurrentLevelName();
-        Current = GetCellByName(_currentLevelName);
+        CurrentLevelName = _sceneLoader.GetCurrentLevelName();
+        Current = GetCellByName(CurrentLevelName);
     }
 
     public void UnlockNextLevel(string nextLevelName)
@@ -116,7 +116,7 @@ public class LevelCellsService : ILevelCellsService
             _levelsData[i].locked = _levels[i].LevelLocked;
 
             _levelsData[i].artifactSprite = _levels[i].ArtifactSprite;
-            _levelsData[i].artefactLocked = _levels[i].ArtifactLocked;
+            _levelsData[i].artifactLocked = _levels[i].ArtifactLocked;
         }
     }
    
@@ -127,7 +127,7 @@ public class LevelCellsService : ILevelCellsService
         if (levelDataIndex >= -1)
         {
             _levelsData[levelDataIndex].locked = false;
-            _levelsData[levelDataIndex].artefactLocked = artifactLocked;
+            _levelsData[levelDataIndex].artifactLocked = artifactLocked;
         }
        
     }
