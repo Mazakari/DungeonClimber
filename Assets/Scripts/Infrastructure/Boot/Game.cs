@@ -2,8 +2,8 @@
 {
     public GameStateMachine StateMachine;
 
-    public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain)
+    public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain, YandexAPI yandexAPI)
     {
-        StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, AllServices.Container);
+        StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, yandexAPI, AllServices.Container);
     }
 }

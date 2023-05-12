@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using static GameMetaData;
 
 public class MainMenuCanvas : MonoBehaviour, ISavedProgress
 {
@@ -60,12 +58,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
         }
     }
 
-    public void UpdateProgress(PlayerProgress progress)
-    {
-        //CopyProgress(_levelCellsService.Levels, progress.gameData.levels);
-    }
-
-
+    public void UpdateProgress(PlayerProgress progress) {}
     public void LoadProgress(PlayerProgress progress)
     {
         int number;
@@ -91,22 +84,4 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
             }
         }
     }
-
-    //private void CopyProgress(LevelCell[] source, List<LevelCellsData> target)
-    //{
-    //    target.Clear();
-
-    //    for (int i = 0; i < source.Length; i++)
-    //    {
-    //        LevelCellsData data;
-    //        data.number = source[i].LevelNumber;
-    //        data.locked = source[i].LevelLocked;
-    //        data.sceneName = source[i].LevelSceneName;
-
-    //        data.artifactSprite = source[i].ArtifactSprite;
-    //        data.artifactLocked = source[i].ArtifactLocked;
-
-    //        target.Add(data);
-    //    }
-    //}
 }

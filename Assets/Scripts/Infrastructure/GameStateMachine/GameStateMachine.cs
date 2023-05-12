@@ -6,14 +6,14 @@ public class GameStateMachine
     private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, AllServices services)
+    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, YandexAPI yandexAPI, AllServices services)
     {
         _states = new Dictionary<Type, IExitableState>
         {
-            [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+            [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, yandexAPI, services),
             [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<ILevelCellsService>()),
             [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
-            [typeof(LoadMainMenuState)] = new LoadMainMenuState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<ILevelCellsService>()),
+            [typeof(LoadMainMenuState)] = new LoadMainMenuState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<ILevelCellsService>(), services.Single<IYandexService>()),
             [typeof(GameLoopState)] = new GameLoopState(this, sceneLoader, services.Single<ISaveLoadService>(), services.Single<ILevelCellsService>()),
             [typeof(MainMenuState)] = new MainMenuState(this, services.Single<ISaveLoadService>()),
         };

@@ -11,6 +11,6 @@ public class ProjectVersion : MonoBehaviour
     {
         _projectVersion = GetComponent<TMP_Text>();
 
-        _projectVersion.text = $"Roobinium Games 2023. v{Application.version}";
+        _projectVersion.text = $"Maza Games 2023. v{Application.version}";
     }
 }

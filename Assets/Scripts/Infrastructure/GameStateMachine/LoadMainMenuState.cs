@@ -8,6 +8,7 @@ public class LoadMainMenuState : IPayloadedState<string>
     private readonly LoadingCurtain _curtain;
     private readonly IPersistentProgressService _progressService;
     private readonly ILevelCellsService _cellsService;
+    private readonly IYandexService _yandexService;
 
     public LoadMainMenuState(
         GameStateMachine gameStateMachine, 
@@ -15,7 +16,8 @@ public class LoadMainMenuState : IPayloadedState<string>
         LoadingCurtain curtain, 
         IGameFactory gameFactory, 
         IPersistentProgressService progressService, 
-        ILevelCellsService cellsService)
+        ILevelCellsService cellsService,
+        IYandexService yandexService)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
@@ -24,6 +26,7 @@ public class LoadMainMenuState : IPayloadedState<string>
         _gameFactory = gameFactory;
         _progressService = progressService;
         _cellsService = cellsService;
+        _yandexService = yandexService;
     }
 
     public void Enter(string sceneName)
@@ -47,8 +50,12 @@ public class LoadMainMenuState : IPayloadedState<string>
         _gameStateMachine.Enter<MainMenuState>();
     }
 
-    private void InitMainMenu() =>
+    private void InitMainMenu()
+    {
         _gameFactory.CreateMainMenulHud();
+
+        InitYandexPlayerID();
+    }
 
     private void InitVolumeControl()
     {
@@ -67,5 +74,17 @@ public class LoadMainMenuState : IPayloadedState<string>
         {
             progressReader.LoadProgress(_progressService.Progress);
         }
+    }
+
+    private void InitYandexPlayerID()
+    {
+        PlayerYandexID yandexID = Object.FindObjectOfType<PlayerYandexID>();
+
+        _yandexService.API.GetPlayerData();
+
+        string playerImageUrl = _yandexService.API.PlayerAvatarUrl;
+        string playerName = _yandexService.API.PlayerIDName;
+
+        yandexID.InitID(playerName, playerImageUrl);
     }
 }

@@ -6,10 +6,8 @@ public class LoadingCurtain : MonoBehaviour
     [SerializeField] private CanvasGroup _curtain;
     private float _fadeInStep = 0.03f;
 
-    private void Awake()
-    {
+    private void Awake() => 
         DontDestroyOnLoad(this);
-    }
 
     public void Show()
     {
@@ -17,10 +15,8 @@ public class LoadingCurtain : MonoBehaviour
         _curtain.alpha = 1f;
     }
 
-    public void Hide()
-    {
+    public void Hide() => 
         StartCoroutine(FadeIn());
-    }
 
     private IEnumerator FadeIn()
     {
