@@ -6,6 +6,7 @@ public class Constants
     public const string MAIN_MENU_SCENE_NAME = "MainMenu";
     public const string FIRST_LEVEL_NAME = "Level1";
     public const string NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME = "Level1";
+    public const string SHOW_YANDEX_RATE_GAME_POPUP_LEVEL = "Level5";
 
     public static readonly string SAVE_DATA_FOLDER_PATH = $"{Application.dataPath}/Saves";
     public static readonly string SAVE_DATA_PATH = $"{SAVE_DATA_FOLDER_PATH}/save.txt";

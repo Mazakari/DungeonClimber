@@ -26,6 +26,8 @@ public class GameMetaData
     public float soundVolume;
     public bool soundToggle;
 
+    public bool gameRated;
+
     public GameMetaData(string initialLevel)
 	{
         nextLevel = initialLevel;

@@ -48,6 +48,8 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
 
         _LevelCompletePopup.ShowArtifact(artifactLocked);
         _LevelCompletePopup.gameObject.SetActive(true);
+
+        ShowYandexRateGamePopup();
     }
 
     private void SetArtifactImage() => 
@@ -149,5 +151,13 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     {
         UpdateCurrentLevelData(_levelCellsService.CurrentLevelName, targetLevelsData);
         UpdateNextLevelData(_nextLevelName, targetLevelsData);
+    }
+
+    private void ShowYandexRateGamePopup()
+    {
+        if (_levelCellsService.CurrentLevelName.Equals(Constants.SHOW_YANDEX_RATE_GAME_POPUP_LEVEL))
+        {
+            AllServices.Container.Single<IYandexService>().API.ShowRateGamePopup();
+        }
     }
 }

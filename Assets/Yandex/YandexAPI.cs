@@ -9,12 +9,17 @@ public class YandexAPI : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void GetPlayerIDData();
 
+    [DllImport("__Internal")]
+    private static extern void RateGame();
+
     private void Awake() =>
         DontDestroyOnLoad(this);
 
     public void GetPlayerData() => 
         GetPlayerIDData();
 
+    public void ShowRateGamePopup() => 
+        RateGame();
 
     public void SetPlayerIDName(string name) => 
         PlayerIDName = name;
