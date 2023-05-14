@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -5,12 +6,21 @@ public class YandexAPI : MonoBehaviour
 {
     public string PlayerIDName { get; private set; }
     public string PlayerAvatarUrl { get; private set; }
+    public string PlayerProgress { get; private set; }
 
     [DllImport("__Internal")]
     private static extern void GetPlayerIDData();
 
     [DllImport("__Internal")]
     private static extern void RateGame();
+
+    [DllImport("__Internal")]
+    private static extern void SavePlayerDataToYandex(string playerData);
+
+    [DllImport("__Internal")]
+    private static extern void LoadPlayerDataFromYandex();
+
+    public event Action OnYandexProgressCopied;
 
     private void Awake() =>
         DontDestroyOnLoad(this);
@@ -26,4 +36,20 @@ public class YandexAPI : MonoBehaviour
 
     public void SetPlayerIDAvatar(string url) => 
         PlayerAvatarUrl = url;
+
+    public void SaveToYandex(string progress)
+    {
+        Debug.Log($"SaveToYandex.progress = {progress}");
+        SavePlayerDataToYandex(progress);
+    }
+
+    public void LoadFromYandex() => 
+        LoadPlayerDataFromYandex();
+
+    public void CopyYandexProgress(string progress)
+    {
+        PlayerProgress = progress;
+
+        OnYandexProgressCopied?.Invoke();
+    }
 }
