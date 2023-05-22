@@ -31,8 +31,21 @@ mergeInto(LibraryManager.library, {
 	 player.getData().then(_data => {
 		 const myJSON = JSON.stringify(_data);
 		 myGameInstance.SendMessage('YandexAPI', 'CopyYandexProgress', myJSON);
+		 console.log('Loading saved data');
+		 console.log(myJSON);
+		
 		 
 	 });
     },
+	
+	UpdateLeaderboardData : function (value) {
+		ysdk.getLeaderboards()
+		.then(lb => {
+			// Без extraData
+			lb.setLeaderboardScore('MaxClearedLevel', value);
+			console.log('Max level saved');
+			console.log(value);
+		});
+	},
 	
   });

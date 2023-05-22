@@ -14,7 +14,7 @@ public class GameStateMachine
             [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<ILevelCellsService>()),
             [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>(), services.Single<IYandexService>()),
             [typeof(LoadMainMenuState)] = new LoadMainMenuState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<ILevelCellsService>(), services.Single<IYandexService>()),
-            [typeof(GameLoopState)] = new GameLoopState(this, sceneLoader, services.Single<ISaveLoadService>(), services.Single<ILevelCellsService>()),
+            [typeof(GameLoopState)] = new GameLoopState(this, sceneLoader),
             [typeof(MainMenuState)] = new MainMenuState(this, services.Single<ISaveLoadService>()),
         };
 

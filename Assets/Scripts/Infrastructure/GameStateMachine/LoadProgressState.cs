@@ -18,14 +18,21 @@ public class LoadProgressState : IState
     public void Enter()
     {
         Debug.Log("LoadProgressState");
-        _yandexService.API.OnYandexProgressCopied += LoadPlayerProgress;
+        // TEST
+        LoadProgressOrInitNew();
+        _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
 
-        _yandexService.API.LoadFromYandex();
+//#if PLATFORM_WEBGL
+//        _yandexService.API.OnYandexProgressCopied += LoadPlayerProgress;
+//        _yandexService.API.LoadFromYandex();
+//#endif
     }
 
     public void Exit()
     {
-        _yandexService.API.OnYandexProgressCopied -= LoadPlayerProgress;
+//#if PLATFORM_WEBGL
+//        _yandexService.API.OnYandexProgressCopied -= LoadPlayerProgress;
+//#endif
     }
 
     private void LoadProgressOrInitNew() =>

@@ -13,21 +13,25 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     [SerializeField] private CurrentLevelDisplay _levelDisplay;
 
     private ILevelCellsService _levelCellsService;
+    private IYandexService _yandexService;
 
     public static Action OnNextLevel;
     public static Action OnRestartLevel;
     public static Action OnMainMenuButton;
 
     private string _nextLevelName;
+    private int _currentLevelNumber;
 
     private void OnEnable()
     {
         _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
+        _yandexService = AllServices.Container.Single<IYandexService>();
 
         _LevelCompletePopup.gameObject.SetActive(false);
 
         LevelState.OnLevelResultShow += ShowLevelCompletePopup;
         GameLoopState.OnNextLevelNameSet += UpdateNextLevel;
+        GameLoopState.OnCurrentLevelSet += UpdateCurrentLevel;
 
         UpdateLevelDisplay();
        
@@ -49,7 +53,7 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         _LevelCompletePopup.ShowArtifact(artifactLocked);
         _LevelCompletePopup.gameObject.SetActive(true);
 
-        ShowYandexRateGamePopup();
+        //ShowYandexRateGamePopup();
     }
 
     private void SetArtifactImage() => 
@@ -65,8 +69,14 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     private void UpdateNextLevel(string name) => 
         _nextLevelName = name;
 
+    private void UpdateCurrentLevel(int newCurrentLevel) =>
+       _currentLevelNumber = newCurrentLevel;
+
     public void UpdateProgress(PlayerProgress progress)
     {
+        // Save yandex leaderboard
+        //_yandexService.API.SaveYandexLeaderboard(_currentLevelNumber);
+
         progress.gameData.nextLevel = _nextLevelName;
         CopyProgress(_levelCellsService.LevelsData, progress.gameData.levels);
     }

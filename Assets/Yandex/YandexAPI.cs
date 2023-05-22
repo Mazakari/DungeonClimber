@@ -22,6 +22,10 @@ public class YandexAPI : MonoBehaviour
 
     public event Action OnYandexProgressCopied;
 
+    [DllImport("__Internal")]
+    private static extern void UpdateLeaderboardData(int newMaxLevel);
+
+
     private void Awake() =>
         DontDestroyOnLoad(this);
 
@@ -52,4 +56,12 @@ public class YandexAPI : MonoBehaviour
 
         OnYandexProgressCopied?.Invoke();
     }
+
+    public void SaveYandexLeaderboard(int newMaxLevel)
+    {
+        Debug.Log($"Sending new max level {newMaxLevel} to Yandex leaderboard");
+        UpdateLeaderboardData(newMaxLevel);
+    }
+   
+       
 }

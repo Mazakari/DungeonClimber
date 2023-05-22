@@ -29,8 +29,11 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     private void OnDisable() => 
         SettingsPopup.OnSettingsSaved -= HideSettingsPopup;
 
-    public void ShowSelectLevelsPopup() => 
+    public void ShowSelectLevelsPopup()
+    {
+        Debug.Log("ShowSelectLevelsPopup");
         _levelSelectionPopup.SetActive(true);
+    }
 
     public void HideSelectLevelsPopup() => 
         _levelSelectionPopup.SetActive(false);
@@ -83,5 +86,9 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
                 _levelCellsService.Levels[i].InitLevelCell(number, name, locked, sprite, artifactLocked);
             }
         }
+
+        Debug.Log("MainMenuCanvas.LoadProgress");
+        Debug.Log($"_levelCellsService.Levels = {_levelCellsService.Levels}");
+        Debug.Log($"_levelCellsService.Levels.Length = {_levelCellsService.Levels.Length}");
     }
 }

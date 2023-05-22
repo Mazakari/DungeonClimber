@@ -5,20 +5,18 @@ public class GameLoopState : IState
 {
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
-    private ISaveLoadService _saveLoadService;
-    private readonly ILevelCellsService _levelCells;
 
     private string _currentLevelName;
+    private int _currentLevelNumber;
     private string _nextLevelName;
 
     public static event Action<string> OnNextLevelNameSet;
+    public static event Action<int> OnCurrentLevelSet;
 
-    public GameLoopState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ISaveLoadService saveLoadService, ILevelCellsService levelCells)
+    public GameLoopState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
     {
         _gameStateMachine = gameStateMachine;
         _sceneLoader = sceneLoader;
-        _saveLoadService = saveLoadService;
-        _levelCells = levelCells;
     }
 
     public void Enter()
@@ -47,8 +45,10 @@ public class GameLoopState : IState
     private void SetLevelNames()
     {
         _currentLevelName = _sceneLoader.GetCurrentLevelName();
-        _nextLevelName = _sceneLoader.GetNextLevelName();
+        _currentLevelNumber = _sceneLoader.GetCurrentLevelNumber();
+        OnCurrentLevelSet?.Invoke(_currentLevelNumber);
 
+        _nextLevelName = _sceneLoader.GetNextLevelName();
         OnNextLevelNameSet?.Invoke(_nextLevelName);
     }
 
