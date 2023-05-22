@@ -27,8 +27,6 @@ public class LevelCellsService : ILevelCellsService
 
     public void InitService()
     {
-        Debug.Log("LevelCellsService.InitService");
-
         _levelsDataSO = Resources.Load<LevelsDataSO>(Constants.LEVELS_DATA_SO_PATH);
         _levelsCount = _sceneLoader.GetLevelsCount();
 
@@ -39,13 +37,6 @@ public class LevelCellsService : ILevelCellsService
 
         InitLevels();
         CopyLevelsData();
-
-       
-        Debug.Log($"LevelsDataSO count = {_levelsDataSO.LevelsData.Length}");
-        Debug.Log($"_levelsCount = {_levelsCount}");
-
-        Debug.Log($"Level cells count = {_levels.Length}");
-        Debug.Log($"Level cells data count = {_levelsData.Length}");
     }
 
     public void SaveCompletedLevel(bool artifactLocked)

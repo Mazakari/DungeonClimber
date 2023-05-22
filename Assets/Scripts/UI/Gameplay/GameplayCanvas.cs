@@ -53,7 +53,7 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         _LevelCompletePopup.ShowArtifact(artifactLocked);
         _LevelCompletePopup.gameObject.SetActive(true);
 
-        //ShowYandexRateGamePopup();
+        ShowYandexRateGamePopup();
     }
 
     private void SetArtifactImage() => 
@@ -75,7 +75,7 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     public void UpdateProgress(PlayerProgress progress)
     {
         // Save yandex leaderboard
-        //_yandexService.API.SaveYandexLeaderboard(_currentLevelNumber);
+        _yandexService.API.SaveYandexLeaderboard(_currentLevelNumber);
 
         progress.gameData.nextLevel = _nextLevelName;
         CopyProgress(_levelCellsService.LevelsData, progress.gameData.levels);
