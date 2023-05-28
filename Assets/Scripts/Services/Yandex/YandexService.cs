@@ -2,8 +2,9 @@
 {
     public YandexAPI API { get; }
 
-    public YandexService(YandexAPI yandexAPI)
+    public YandexService(YandexAPI yandexAPI, ITimeService timeService)
     {
         API = yandexAPI;
+        API.InitTimeService(timeService);
     }
 }

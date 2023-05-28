@@ -56,4 +56,23 @@ mergeInto(LibraryManager.library, {
 		return buffer;
 	},
 	
+	ShowFullscrenAds : function () {
+		myGameInstance.SendMessage('YandexAPI', 'PauseGame');
+		
+		ysdk.adv.showFullscreenAdv({
+			callbacks: {
+			onClose: function(wasShown) {
+				console.log('Interstitial ads shown');
+				myGameInstance.SendMessage('YandexAPI', 'UnPauseGame');
+			// some action after close
+        },
+        onError: function(error) {
+			console.log('Interstitial ads show failed');
+			myGameInstance.SendMessage('YandexAPI', 'UnPauseGame');
+          // some action on error
+        }
+		}
+		})
+	},
+	
   });

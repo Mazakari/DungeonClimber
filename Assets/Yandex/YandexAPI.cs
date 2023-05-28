@@ -28,6 +28,9 @@ public class YandexAPI : MonoBehaviour
     [DllImport("__Internal")]
     private static extern string GetSystemLanguage();
 
+    [DllImport("__Internal")]
+    private static extern void ShowFullscrenAds();
+    private ITimeService _timeService;
 
     private void Awake() =>
         DontDestroyOnLoad(this);
@@ -69,4 +72,15 @@ public class YandexAPI : MonoBehaviour
     public string GetPlatformLanguage() =>
         GetSystemLanguage();
 
+    public void ShowYandexInterstitial() => 
+        ShowFullscrenAds();
+
+    public void PauseGame() => 
+        _timeService.PauseGame();
+
+    public void UnPauseGame() => 
+        _timeService.ResumeGame();
+
+    public void InitTimeService(ITimeService timeService) => 
+        _timeService = timeService;
 }

@@ -15,11 +15,15 @@ public class LevelCompletePopup : MonoBehaviour
     [SerializeField] private ItemSound _itemSound;
 
     private ISaveLoadService _saveLoadService;
-    
+    private IYandexService _yandexService;
+
 
     private void OnEnable()
     {
         _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+        _yandexService = AllServices.Container.Single<IYandexService>();
+
+        ShowInterstitialAds();
 
         _nextLevelButton.onClick.AddListener(LoadNextLevel);
         _restartButton.onClick.AddListener(RestartLevel);
@@ -50,4 +54,6 @@ public class LevelCompletePopup : MonoBehaviour
         }
     }
 
+    private void ShowInterstitialAds() =>
+       _yandexService.API.ShowYandexInterstitial();
 }
