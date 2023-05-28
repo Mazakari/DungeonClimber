@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChestKeyPanel : MonoBehaviour
@@ -37,6 +38,4 @@ public class ChestKeyPanel : MonoBehaviour
             }
         }
     }
-
-    
 }

@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 6316284628548460483}
   - component: {fileID: 7534730269429800735}
   - component: {fileID: 2758313821282287205}
+  - component: {fileID: 3289194195827595742}
   m_Layer: 5
   m_Name: PopupTitle
   m_TagString: Untagged
@@ -371,6 +372,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3289194195827595742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3817977373232866476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b3a6126f2697d48961d8cd861fb43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizationText: {fileID: 2758313821282287205}
+  _russianText: "\u0412\u042B\u0411\u041E\u0420 \u0423\u0420\u041E\u0412\u041D\u042F"
+  _englishText: SELECT LEVEL
+  _turkishText: SEVIYE SECIMI
 --- !u!1 &7345541003503860446
 GameObject:
   m_ObjectHideFlags: 0

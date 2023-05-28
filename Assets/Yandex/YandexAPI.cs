@@ -25,6 +25,9 @@ public class YandexAPI : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void UpdateLeaderboardData(int newMaxLevel);
 
+    [DllImport("__Internal")]
+    private static extern string GetSystemLanguage();
+
 
     private void Awake() =>
         DontDestroyOnLoad(this);
@@ -62,6 +65,8 @@ public class YandexAPI : MonoBehaviour
         Debug.Log($"Sending new max level {newMaxLevel} to Yandex leaderboard");
         UpdateLeaderboardData(newMaxLevel);
     }
-   
-       
+
+    public string GetPlatformLanguage() =>
+        GetSystemLanguage();
+
 }

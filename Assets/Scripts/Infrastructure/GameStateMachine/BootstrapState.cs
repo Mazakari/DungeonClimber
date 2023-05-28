@@ -43,6 +43,7 @@ public class BootstrapState : IState
         _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>(), _services.Single<IYandexService>()));
         _services.RegisterSingle<ITimeService>(new TimeService());
         _services.RegisterSingle<ILevelCellsService>(new LevelCellsService(_services.Single<IGameFactory>(), _sceneLoader));
+        _services.RegisterSingle<ILanguageService>(new LanguageService(_services.Single<IYandexService>()));
     }
 
     // System Settings

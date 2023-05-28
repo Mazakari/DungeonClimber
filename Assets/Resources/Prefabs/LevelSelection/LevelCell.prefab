@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u0440\u043E\u0432\u0435\u043D\u044C 9999"
+  m_text: 9999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7456cc7e5ba75540beb75ce9ed0d4c8, type: 2}
   m_sharedMaterial: {fileID: 2911154300718882642, guid: f7456cc7e5ba75540beb75ce9ed0d4c8, type: 2}
@@ -833,6 +833,5 @@ MonoBehaviour:
   _levelButton: {fileID: 1306019514374338402}
   _levelNumberText: {fileID: 2885907839928807414}
   _lockedState: {fileID: 2404909987655693449}
-  _artifactState: {fileID: 6362320473439144102}
   _artifactImage: {fileID: 66916755509714485}
   _artifactLockedBody: {fileID: 4946375916425021830}

@@ -561,6 +561,7 @@ GameObject:
   - component: {fileID: 837386558451344765}
   - component: {fileID: 3044617683951552479}
   - component: {fileID: 7981185302324717575}
+  - component: {fileID: 2563175406547866569}
   m_Layer: 5
   m_Name: PopupHeader_Text
   m_TagString: Untagged
@@ -685,6 +686,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2563175406547866569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6030586366726051293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b3a6126f2697d48961d8cd861fb43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizationText: {fileID: 7981185302324717575}
+  _russianText: "\u0423\u0420\u041E\u0412\u0415\u041D\u042C \u041F\u0420\u041E\u0419\u0414\u0415\u041D"
+  _englishText: LEVEL COMPLETE
+  _turkishText: SEVIYE GECTI
 --- !u!1 &6256564882169483757
 GameObject:
   m_ObjectHideFlags: 0
