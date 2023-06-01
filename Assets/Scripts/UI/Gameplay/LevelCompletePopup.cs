@@ -34,17 +34,17 @@ public class LevelCompletePopup : MonoBehaviour
         _itemSound.Play();
     }
 
-    private void RestartLevel() => 
-        GameplayCanvas.OnRestartLevel?.Invoke();
-
-    private void LoadNextLevel() => 
-        GameplayCanvas.OnNextLevel?.Invoke();
-
     private void OnDisable()
     {
         _nextLevelButton.onClick.RemoveAllListeners();
         _restartButton.onClick.RemoveAllListeners();
     }
+
+    private void RestartLevel() => 
+        GameplayCanvas.OnRestartLevel?.Invoke();
+
+    private void LoadNextLevel() => 
+        GameplayCanvas.OnNextLevel?.Invoke();
 
     public void ShowArtifact(bool locked)
     {
