@@ -3,13 +3,9 @@
 public class MainMenuState : IState
 {
     private readonly GameStateMachine _gameStateMachine;
-    private readonly ISaveLoadService _saveLoadService;
 
-    public MainMenuState(GameStateMachine gameStateMachine, ISaveLoadService progressService)
-    {
+    public MainMenuState(GameStateMachine gameStateMachine) => 
         _gameStateMachine = gameStateMachine;
-        _saveLoadService = progressService;
-    }
 
     public void Enter()
     {
@@ -20,9 +16,6 @@ public class MainMenuState : IState
     private void StartGame(string levelName) =>
         _gameStateMachine.Enter<LoadLevelState, string>(levelName);
 
-    public void Exit()
-    {
-        _saveLoadService.SaveProgress();
+    public void Exit() => 
         LevelCell.OnLevelCellPress -= StartGame;
-    }
 }

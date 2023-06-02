@@ -22,9 +22,10 @@ public class SaveLoadService : ISaveLoadService
 
         string progress = _progressService.Progress.ToJson();
 
-//#if PLATFORM_WEBGL
-//        SaveProgressToYandex(progress);
-//#endif
+#if !UNITY_EDITOR
+        Debug.Log("SaveLoadService.SaveProgress save to Yandex");
+        SaveProgressToYandex(progress);
+#endif
 
         PlayerPrefs.SetString(Constants.PROGRESS_KEY, progress);
     }
@@ -36,10 +37,10 @@ public class SaveLoadService : ISaveLoadService
 
         progressString = PlayerPrefs.GetString(Constants.PROGRESS_KEY);
 
-//#if PLATFORM_WEBGL
-
-//        progressString = _yandexService.API.PlayerProgress;
-//#endif
+#if !UNITY_EDITOR
+        Debug.Log("SaveLoadService.LoadProgress from Yandex");
+        progressString = _yandexService.API.PlayerProgress;
+#endif
 
         if (progressString != null)
         {

@@ -23,8 +23,9 @@ public class LevelCompletePopup : MonoBehaviour
         _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         _yandexService = AllServices.Container.Single<IYandexService>();
 
+#if !UNITY_EDITOR
         ShowInterstitialAds();
-
+#endif
         _nextLevelButton.onClick.AddListener(LoadNextLevel);
         _restartButton.onClick.AddListener(RestartLevel);
 

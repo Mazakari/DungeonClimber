@@ -18,21 +18,23 @@ public class LoadProgressState : IState
     public void Enter()
     {
         Debug.Log("LoadProgressState");
+#if UNITY_EDITOR
         // TEST
         LoadProgressOrInitNew();
         _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
+#endif
 
-//#if PLATFORM_WEBGL
-//        _yandexService.API.OnYandexProgressCopied += LoadPlayerProgress;
-//        _yandexService.API.LoadFromYandex();
-//#endif
+#if !UNITY_EDITOR
+        _yandexService.API.OnYandexProgressCopied += LoadPlayerProgress;
+        _yandexService.API.LoadFromYandex();
+#endif
     }
 
     public void Exit()
     {
-//#if PLATFORM_WEBGL
-//        _yandexService.API.OnYandexProgressCopied -= LoadPlayerProgress;
-//#endif
+#if !UNITY_EDITOR
+        _yandexService.API.OnYandexProgressCopied -= LoadPlayerProgress;
+#endif
     }
 
     private void LoadProgressOrInitNew() =>
@@ -46,6 +48,8 @@ public class LoadProgressState : IState
 
     private void LoadPlayerProgress()
     {
+        Debug.Log("LoadProgressState.LoadPlayerProgress from Yandex");
+
         LoadProgressOrInitNew();
         //_gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
         _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);

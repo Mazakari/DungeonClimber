@@ -18,9 +18,11 @@ public class LanguageService : ILanguageService
     {
         _yandexService = yandexService;
 
+#if !UNITY_EDITOR
         SetSystemLanguage();
         Debug.Log($"System language = {_language}");
         Debug.Log($"CurrentLanguage = {Language}");
+#endif
     }
 
     private void SetSystemLanguage()

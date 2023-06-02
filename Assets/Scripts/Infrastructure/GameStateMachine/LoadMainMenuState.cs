@@ -54,7 +54,9 @@ public class LoadMainMenuState : IPayloadedState<string>
     {
         _gameFactory.CreateMainMenulHud();
 
+#if !UNITY_EDITOR
         InitYandexPlayerID();
+#endif
     }
 
     private void InitVolumeControl()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuCanvas : MonoBehaviour, ISavedProgress
 {
@@ -11,18 +12,21 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     [Space(10)]
     [SerializeField] private GameObject _settingsPopup;
 
+    [Header("Yandex Progress Reset")]
+    [Space(10)]
+    [SerializeField] private Button _yandexProgressResetButton;
+
     private ILevelCellsService _levelCellsService;
 
 
     private void OnEnable()
     {
+        InitYandexProgressResetButton();
         _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
-
         SettingsPopup.OnSettingsSaved += HideSettingsPopup;
 
         InitPopups();
     }
-
     private void Start() => 
         InitLevelsSelectionPopup();
 
@@ -59,6 +63,13 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
         {
             _levelCellsService.Levels[i].transform.SetParent(_levelSelectionContent);
         }
+    }
+    private void InitYandexProgressResetButton()
+    {
+        _yandexProgressResetButton.gameObject.SetActive(false);
+#if !UNITY_EDITOR
+       _yandexProgressResetButton.gameObject.SetActive(true);
+#endif
     }
 
     public void UpdateProgress(PlayerProgress progress) {}

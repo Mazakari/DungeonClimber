@@ -74,9 +74,10 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
 
     public void UpdateProgress(PlayerProgress progress)
     {
+#if !UNITY_EDITOR
         // Save yandex leaderboard
         _yandexService.API.SaveYandexLeaderboard(_currentLevelNumber);
-
+#endif
         progress.gameData.nextLevel = _nextLevelName;
         CopyProgress(_levelCellsService.LevelsData, progress.gameData.levels);
     }

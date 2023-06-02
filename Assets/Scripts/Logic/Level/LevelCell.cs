@@ -21,7 +21,6 @@ public class LevelCell : MonoBehaviour
 
     [Space(10)]
     [Header("Artifact Data")]
-    //[SerializeField] private GameObject _artifactState;
     [SerializeField] private Image _artifactImage;
     [SerializeField] private GameObject _artifactLockedBody;
     
@@ -57,7 +56,6 @@ public class LevelCell : MonoBehaviour
         _artifactLocked = artifactLocked;
 
         _levelNumberText.text = _levelNumber.ToString();
-        //_levelNumberText.text = _levelSceneName;
         _lockedState.SetActive(_levelLocked);
     }
 
@@ -65,7 +63,6 @@ public class LevelCell : MonoBehaviour
     {
         _artifactImage.sprite = _artifactSprite;
         _artifactLockedBody.SetActive(_artifactLocked);
-        //_artifactState.SetActive(_artifactLocked);
     }
 
     public void LoadButtonLevel() =>
