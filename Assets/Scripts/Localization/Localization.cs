@@ -15,17 +15,24 @@ public class Localization : MonoBehaviour
     {
         _languageService = AllServices.Container.Single<ILanguageService>();
 
+#if !UNITY_EDITOR
         SetLocalization();
+#endif
+
     }
 
     private void SetLocalization()
     {
-        _localizationText.text = _languageService.Language switch
+        if (_localizationText != null)
         {
-            LanguageService.CurrentLanguage.Ru => _russianText,
-            LanguageService.CurrentLanguage.En => _englishText,
-            LanguageService.CurrentLanguage.Tr => _turkishText,
-            _ => _englishText,
-        };
+            Debug.Log("SetLocalization");
+            _localizationText.text = _languageService.Language switch
+            {
+                LanguageService.CurrentLanguage.Ru => _russianText,
+                LanguageService.CurrentLanguage.En => _englishText,
+                LanguageService.CurrentLanguage.Tr => _turkishText,
+                _ => _englishText,
+            };
+        }
     }
 }

@@ -168,6 +168,7 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
     {
         if (_levelCellsService.CurrentLevelName.Equals(Constants.SHOW_YANDEX_RATE_GAME_POPUP_LEVEL))
         {
+            Debug.Log($"ShowYandexRateGamePopup at {Constants.SHOW_YANDEX_RATE_GAME_POPUP_LEVEL}");
             AllServices.Container.Single<IYandexService>().API.ShowRateGamePopup();
         }
     }

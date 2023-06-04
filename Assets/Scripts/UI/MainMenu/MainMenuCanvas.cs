@@ -12,6 +12,10 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     [Space(10)]
     [SerializeField] private GameObject _settingsPopup;
 
+    [Header("Developers Popup")]
+    [Space(10)]
+    [SerializeField] private GameObject _developersPopup;
+
     [Header("Yandex Progress Reset")]
     [Space(10)]
     [SerializeField] private Button _yandexProgressResetButton;
@@ -45,6 +49,12 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     public void ShowSettingsPopup() =>
         _settingsPopup.SetActive(true);
 
+    public void ShowDevelopersPopup() =>
+        _developersPopup.SetActive(true);
+
+    public void HideDevelopersPopup() =>
+       _developersPopup.SetActive(false);
+
     public void QuitGame() => 
         Application.Quit();
 
@@ -55,6 +65,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     {
         _levelSelectionPopup.SetActive(false);
         _settingsPopup.SetActive(false);
+        _developersPopup.SetActive(false);
     }
 
     private void InitLevelsSelectionPopup()
