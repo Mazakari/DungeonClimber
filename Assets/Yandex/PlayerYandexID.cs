@@ -9,7 +9,6 @@ public class PlayerYandexID : MonoBehaviour
     [SerializeField] private RawImage _playerAvatar;
     [SerializeField] private TMP_Text _playerName;
 
-
     public void InitID(string name, string avatarUrl)
     {
         SetPlayerName(name);

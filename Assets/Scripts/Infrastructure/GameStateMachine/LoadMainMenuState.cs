@@ -55,7 +55,9 @@ public class LoadMainMenuState : IPayloadedState<string>
         _gameFactory.CreateMainMenulHud();
 
 #if !UNITY_EDITOR
-        InitYandexPlayerID();
+        CheckPlayerAuth();
+        //InitYandexPlayerID();
+
 #endif
     }
 
@@ -80,7 +82,7 @@ public class LoadMainMenuState : IPayloadedState<string>
 
     private void InitYandexPlayerID()
     {
-        PlayerYandexID yandexID = Object.FindObjectOfType<PlayerYandexID>();
+        PlayerYandexID yandexID = Object.FindObjectOfType<PlayerYandexID>(true);
 
         _yandexService.API.GetPlayerData();
 
@@ -89,4 +91,7 @@ public class LoadMainMenuState : IPayloadedState<string>
 
         yandexID.InitID(playerName, playerImageUrl);
     }
+
+    private void CheckPlayerAuth() =>
+       _yandexService.API.CheckAuthorizedStatus();
 }

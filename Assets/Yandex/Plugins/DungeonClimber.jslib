@@ -1,9 +1,9 @@
 mergeInto(LibraryManager.library, {
 
-  GetPlayerIDData: function () {
+   GetPlayerIDData: function () {
 	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDName', player.getName());
 	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDAvatar', player.getPhoto("medium"));
-    },
+	},
 	
 	RateGame: function () {
 	 ysdk.feedback.canReview()
@@ -73,6 +73,13 @@ mergeInto(LibraryManager.library, {
         }
 		}
 		})
+	},
+	
+	PlayerAuthorized : function () {
+		console.log('Plugin PlayerAuthorized');
+		console.log(playerAuthorized);
+		
+		return playerAuthorized
 	},
 	
   });

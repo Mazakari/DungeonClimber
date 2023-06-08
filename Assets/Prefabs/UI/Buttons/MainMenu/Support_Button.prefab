@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4946856593107880704}
   - component: {fileID: 8431941245145004124}
   m_Layer: 5
-  m_Name: Developers_Button
+  m_Name: Support_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0420\u0410\u0417\u0420\u0410\u0411\u041E\u0422\u0427\u0418\u041A\u0418"
+  m_text: "\u041F\u041E\u0414\u0414\u0415\u0420\u0416\u041A\u0410"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7456cc7e5ba75540beb75ce9ed0d4c8, type: 2}
   m_sharedMaterial: {fileID: 2911154300718882642, guid: f7456cc7e5ba75540beb75ce9ed0d4c8, type: 2}
@@ -364,5 +364,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _localizationText: {fileID: 5995757435532044654}
   _russianText: "\u0420\u0410\u0417\u0420\u0410\u0411\u041E\u0422\u0427\u0418\u041A"
-  _englishText: DEVELOPER
-  _turkishText: GELISTIRICI
+  _englishText: SUPPORT
+  _turkishText: DESTEK
