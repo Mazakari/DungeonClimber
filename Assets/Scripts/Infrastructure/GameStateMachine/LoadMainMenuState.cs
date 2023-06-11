@@ -56,8 +56,6 @@ public class LoadMainMenuState : IPayloadedState<string>
 
 #if !UNITY_EDITOR
         CheckPlayerAuth();
-        //InitYandexPlayerID();
-
 #endif
     }
 
@@ -78,18 +76,6 @@ public class LoadMainMenuState : IPayloadedState<string>
         {
             progressReader.LoadProgress(_progressService.Progress);
         }
-    }
-
-    private void InitYandexPlayerID()
-    {
-        PlayerYandexID yandexID = Object.FindObjectOfType<PlayerYandexID>(true);
-
-        _yandexService.API.GetPlayerData();
-
-        string playerImageUrl = _yandexService.API.PlayerAvatarUrl;
-        string playerName = _yandexService.API.PlayerIDName;
-
-        yandexID.InitID(playerName, playerImageUrl);
     }
 
     private void CheckPlayerAuth() =>

@@ -4,16 +4,13 @@ public class PlayerAuthorization : MonoBehaviour
 {
     [SerializeField] private GameObject _authorizePlayer;
     [SerializeField] private GameObject _playerYandexID;
+    [SerializeField] private PlayerYandexID _yandexID;
 
     private IYandexService _yandexService;
 
     private void OnEnable()
     {
         _yandexService = AllServices.Container.Single<IYandexService>();
-
-        // TO DO Remove after build success
-        _authorizePlayer.SetActive(false);
-        _playerYandexID.SetActive(false);
 
 #if !UNITY_EDITOR
        InitAuthDisplay();
@@ -28,9 +25,19 @@ public class PlayerAuthorization : MonoBehaviour
 #endif
     }
 
+    public void AuthorizeButton() =>
+        _yandexService.API.Authorize();
+
+    private void InitAuthDisplay()
+    {
+        _authorizePlayer.SetActive(true);
+        _playerYandexID.SetActive(false);
+    }
+
     private void ShowAuthState()
     {
         bool authorized = _yandexService.API.PlayerLoggedIn;
+        GetPlayerDataAndUpdateYandexIDUI(authorized);
 
         _authorizePlayer.SetActive(!authorized);
         _playerYandexID.SetActive(authorized);
@@ -38,9 +45,20 @@ public class PlayerAuthorization : MonoBehaviour
         Debug.Log($"PlayerAuthorization.ShowAuthState Player authorized = {authorized}");
     }
 
-    private void InitAuthDisplay()
+    private void GetPlayerDataAndUpdateYandexIDUI(bool authorized)
     {
-        _authorizePlayer.SetActive(true);
-        _playerYandexID.SetActive(false);
+        if (authorized)
+        {
+            InitYandexPlayerID();
+        }
+    }
+    private void InitYandexPlayerID()
+    {
+        _yandexService.API.GetPlayerData();
+
+        string playerImageUrl = _yandexService.API.PlayerAvatarUrl;
+        string playerName = _yandexService.API.PlayerIDName;
+
+        _yandexID.InitID(playerName, playerImageUrl);
     }
 }

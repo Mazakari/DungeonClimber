@@ -75,11 +75,31 @@ mergeInto(LibraryManager.library, {
 		})
 	},
 	
+	AuthorizePlayer : function () {
+		 console.log('Plugin Authorize Button');
+		 console.log(player);
+		 console.log(ysdk);
+		 ysdk.auth.openAuthDialog().then(() => {
+                    // Игрок успешно авторизован
+					playerAuthorized = true;
+					console.log('Plugin Authorize Success');
+                    initPlayer().catch(err => {
+                        // Ошибка при инициализации объекта Player.
+                    });
+                }).catch(() => {
+                    // Игрок не авторизован.
+					playerAuthorized = false;
+					console.log('Plugin Authorize Failed');
+                });
+		
+	myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+	},
+	
 	PlayerAuthorized : function () {
 		console.log('Plugin PlayerAuthorized');
 		console.log(playerAuthorized);
 		
 		return playerAuthorized
 	},
-	
+		
   });

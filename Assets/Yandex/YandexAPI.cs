@@ -9,6 +9,7 @@ public class YandexAPI : MonoBehaviour
     public string PlayerProgress { get; private set; }
     public bool PlayerLoggedIn { get; private set; }
 
+   
     [DllImport("__Internal")]
     private static extern void GetPlayerIDData();
 
@@ -36,17 +37,27 @@ public class YandexAPI : MonoBehaviour
     private static extern bool PlayerAuthorized();
     public event Action OnAuthorizedStatusResponse;
 
+    [DllImport("__Internal")]
+    private static extern void AuthorizePlayer();
+
+
     private ITimeService _timeService;
+
 
     private void Awake() =>
         DontDestroyOnLoad(this);
 
+   
     public void CheckAuthorizedStatus()
     {
         PlayerLoggedIn = PlayerAuthorized();
         Debug.Log($"CheckAuthorizedStatus = {PlayerLoggedIn}");
         OnAuthorizedStatusResponse?.Invoke();
     }
+
+    public void Authorize() =>
+       AuthorizePlayer();
+
 
     public void GetPlayerData() => 
         GetPlayerIDData();
