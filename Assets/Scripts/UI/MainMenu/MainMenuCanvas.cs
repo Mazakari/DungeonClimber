@@ -75,6 +75,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
             _levelCellsService.Levels[i].transform.SetParent(_levelSelectionContent);
         }
     }
+
     private void InitYandexProgressResetButton()
     {
         _yandexProgressResetButton.gameObject.SetActive(false);

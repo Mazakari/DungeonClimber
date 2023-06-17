@@ -25,8 +25,11 @@ public class PlayerAuthorization : MonoBehaviour
 #endif
     }
 
-    public void AuthorizeButton() =>
+    public void AuthorizeButton()
+    {
+        Debug.Log("AuthorizeButton");
         _yandexService.API.Authorize();
+    }
 
     private void InitAuthDisplay()
     {
@@ -52,12 +55,18 @@ public class PlayerAuthorization : MonoBehaviour
             InitYandexPlayerID();
         }
     }
+
     private void InitYandexPlayerID()
     {
         _yandexService.API.GetPlayerData();
 
         string playerImageUrl = _yandexService.API.PlayerAvatarUrl;
         string playerName = _yandexService.API.PlayerIDName;
+
+        Debug.Log($"PlayerAuthorization.InitYandexPlayerID");
+
+        Debug.Log($"Avatar url = {_yandexService.API.PlayerAvatarUrl}");
+        Debug.Log($"PlayerIDName = {_yandexService.API.PlayerIDName}");
 
         _yandexID.InitID(playerName, playerImageUrl);
     }

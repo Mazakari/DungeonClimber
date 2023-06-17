@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LoadProgressState : IState
 {
@@ -19,39 +20,55 @@ public class LoadProgressState : IState
     {
         Debug.Log("LoadProgressState");
 #if UNITY_EDITOR
-        // TEST
-        LoadProgressOrInitNew();
+        LoadProgressOrInitNew(true);
         _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
 #endif
 
 #if !UNITY_EDITOR
-        _yandexService.API.OnYandexProgressCopied += LoadPlayerProgress;
-        _yandexService.API.LoadFromYandex();
+        _yandexService.API.OnAuthorizedStatusResponse += LoadPlayerProgress;
+        _yandexService.API.OnYandexProgressCopied += LoadProgressFromCloud;
+
+        CheckPlayerAuth();
 #endif
     }
 
     public void Exit()
     {
 #if !UNITY_EDITOR
-        _yandexService.API.OnYandexProgressCopied -= LoadPlayerProgress;
+        _yandexService.API.OnAuthorizedStatusResponse -= LoadPlayerProgress;
+        _yandexService.API.OnYandexProgressCopied -= LoadProgressFromCloud;
 #endif
     }
 
-    private void LoadProgressOrInitNew() =>
-        _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
-
-    private PlayerProgress NewProgress()
-    {
-        Debug.Log("Progress is null. Create new progress");
-        return new(initialLevel: Constants.NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME);
-    }
+    private void CheckPlayerAuth() =>
+       _yandexService.API.CheckAuthorizedStatus();
 
     private void LoadPlayerProgress()
     {
-        Debug.Log("LoadProgressState.LoadPlayerProgress from Yandex");
+        if (_yandexService.API.PlayerLoggedIn)
+        {
+            // Copy save to _yandexService.API.PlayerProgress and await for OnYandexProgressCopied callback
+            _yandexService.API.LoadFromYandex();
+        }
+        else
+        {
+            LoadProgressOrInitNew(true);
+            _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
+        }
+    }
 
-        LoadProgressOrInitNew();
-        //_gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+    private void LoadProgressFromCloud()
+    {
+        Debug.Log("LoadProgressState.LoadProgressFromCloud from Yandex");
+
+        LoadProgressOrInitNew(false);
         _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
+    }
+    private void LoadProgressOrInitNew(bool local) =>
+        _progressService.Progress = _saveLoadService.LoadProgress(local) ?? NewProgress();
+    private PlayerProgress NewProgress()
+    {
+        Debug.Log("Cloud pProgress is null. Create new progress");
+        return new(initialLevel: Constants.NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME);
     }
 }

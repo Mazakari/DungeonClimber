@@ -96,7 +96,6 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
 
         RewriteCurrentAndNextLevelsData(targetLevelsData);
     }
-
     private void FillProgressWithInitialLevelsData(LevelCellsData[] source, List<LevelCellsData> targetLevelsData)
     {
         for (int i = 0; i < source.Length; i++)
@@ -113,6 +112,11 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         }
     }
 
+    private void RewriteCurrentAndNextLevelsData(List<LevelCellsData> targetLevelsData)
+    {
+        UpdateCurrentLevelData(_levelCellsService.CurrentLevelName, targetLevelsData);
+        UpdateNextLevelData(_nextLevelName, targetLevelsData);
+    }
     private void UpdateCurrentLevelData(string completedLevelName, List<LevelCellsData> targetLevelsData)
     {
         LevelCellsData currentData = FindLevelDataInLevelCellService(completedLevelName);
@@ -130,7 +134,6 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
             }
         }
     }
-
     private void UpdateNextLevelData(string nextLevelName, List<LevelCellsData> targetLevelsData)
     {
         LevelCellsData nextLevel = FindLevelDataInLevelCellService(nextLevelName);
@@ -157,11 +160,6 @@ public class GameplayCanvas : MonoBehaviour, ISavedProgress
         }
 
         return data;
-    }
-    private void RewriteCurrentAndNextLevelsData(List<LevelCellsData> targetLevelsData)
-    {
-        UpdateCurrentLevelData(_levelCellsService.CurrentLevelName, targetLevelsData);
-        UpdateNextLevelData(_nextLevelName, targetLevelsData);
     }
 
     private void ShowYandexRateGamePopup()

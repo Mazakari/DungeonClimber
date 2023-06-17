@@ -1,8 +1,12 @@
 mergeInto(LibraryManager.library, {
 
    GetPlayerIDData: function () {
+	  console.log('Plugin GetPlayerIDData');
+	  console.log(player);
 	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDName', player.getName());
+	  console.log(player.getName());
 	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDAvatar', player.getPhoto("medium"));
+	  console.log(player.getPhoto("medium"));
 	},
 	
 	RateGame: function () {
@@ -76,24 +80,46 @@ mergeInto(LibraryManager.library, {
 	},
 	
 	AuthorizePlayer : function () {
-		 console.log('Plugin Authorize Button');
-		 console.log(player);
-		 console.log(ysdk);
-		 ysdk.auth.openAuthDialog().then(() => {
-                    // Игрок успешно авторизован
+		console.log('Plugin Authorize Button');
+		/*sdk.auth.openAuthDialog().then(() => {
+			// Player authorized successfully
+			console.log('Plugin Authorize Success');
+			playerAuthorized = true;
+			myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+        }).catch(() => {
+				// Player not authorized.
+				console.log('Plugin Authorize Failed');
+				playerAuthorized = false;
+			});*/
+		initPlayer().then(_player => {
+		if (_player.getMode() === 'lite') {
+		    // Player not authorized.
+			console.log('Plugin Not authorized');
+			playerAuthorized = false;
+					
+            sdk.auth.openAuthDialog().then(() => {
+                // Player authorized successfully
+				console.log('Plugin Authorize Success');
 					playerAuthorized = true;
-					console.log('Plugin Authorize Success');
-                    initPlayer().catch(err => {
-                        // Ошибка при инициализации объекта Player.
+					myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+					initPlayer().catch(err => {
+                        // Player object initialization error.
                     });
                 }).catch(() => {
-                    // Игрок не авторизован.
-					playerAuthorized = false;
-					console.log('Plugin Authorize Failed');
+                    // Player not authorized.
                 });
 		
-	myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
-	},
+        }
+		else
+		{
+			playerAuthorized = true;
+			console.log('Index Authorized');
+		}
+		}).catch(err => {
+			// Player object initialization error.
+		});
+		
+		},
 	
 	PlayerAuthorized : function () {
 		console.log('Plugin PlayerAuthorized');

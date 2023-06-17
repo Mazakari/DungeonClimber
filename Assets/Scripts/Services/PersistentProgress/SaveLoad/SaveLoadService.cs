@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SaveLoadService : ISaveLoadService
 {
@@ -21,34 +22,61 @@ public class SaveLoadService : ISaveLoadService
         }
 
         string progress = _progressService.Progress.ToJson();
+        PlayerPrefs.SetString(Constants.PROGRESS_KEY, progress);
 
 #if !UNITY_EDITOR
         Debug.Log("SaveLoadService.SaveProgress save to Yandex");
         SaveProgressToYandex(progress);
 #endif
-
-        PlayerPrefs.SetString(Constants.PROGRESS_KEY, progress);
     }
 
-    public PlayerProgress LoadProgress()
+    //    public PlayerProgress LoadProgress()
+    //    {
+    //        string progressString;
+    //        PlayerProgress playerProgress = null;
+
+    //        progressString = PlayerPrefs.GetString(Constants.PROGRESS_KEY);
+
+    //#if !UNITY_EDITOR
+    //        Debug.Log("SaveLoadService.LoadProgress from Yandex");
+    //        progressString = _yandexService.API.PlayerProgress;
+    //#endif
+
+    //        if (progressString != null)
+    //        {
+    //            playerProgress = progressString.ToDeserialized<PlayerProgress>();
+    //        }
+
+    //        return playerProgress;
+    //    }
+
+    public PlayerProgress LoadProgress(bool local)
+    {
+        string progressString = GetLocalOrCloudProgressStrign(local); 
+
+        return GetPlayerProgress(progressString);
+    }
+
+    private string GetLocalOrCloudProgressStrign(bool local)
     {
         string progressString;
-        PlayerProgress playerProgress = null;
-
-        progressString = PlayerPrefs.GetString(Constants.PROGRESS_KEY);
-
-#if !UNITY_EDITOR
-        Debug.Log("SaveLoadService.LoadProgress from Yandex");
-        progressString = _yandexService.API.PlayerProgress;
-#endif
-
-        if (progressString != null)
+        if (local)
         {
-            playerProgress = progressString.ToDeserialized<PlayerProgress>();
+            progressString = PlayerPrefs.GetString(Constants.PROGRESS_KEY);
+        }
+        else
+        {
+            progressString = _yandexService.API.PlayerProgress;
         }
 
-        return playerProgress;
+        return progressString;
     }
+
+    private PlayerProgress GetPlayerProgress(string progressString) =>
+        DeserializeJProgressJSON(progressString);
+
+    private PlayerProgress DeserializeJProgressJSON(string progressString) =>
+        progressString.ToDeserialized<PlayerProgress>();
 
     private void SaveProgressToYandex(string progress) => 
         _yandexService.API.SaveToYandex(progress);

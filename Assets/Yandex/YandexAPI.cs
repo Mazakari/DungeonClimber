@@ -9,7 +9,7 @@ public class YandexAPI : MonoBehaviour
     public string PlayerProgress { get; private set; }
     public bool PlayerLoggedIn { get; private set; }
 
-   
+
     [DllImport("__Internal")]
     private static extern void GetPlayerIDData();
 
@@ -47,7 +47,7 @@ public class YandexAPI : MonoBehaviour
     private void Awake() =>
         DontDestroyOnLoad(this);
 
-   
+
     public void CheckAuthorizedStatus()
     {
         PlayerLoggedIn = PlayerAuthorized();
@@ -55,20 +55,30 @@ public class YandexAPI : MonoBehaviour
         OnAuthorizedStatusResponse?.Invoke();
     }
 
-    public void Authorize() =>
-       AuthorizePlayer();
+    public void Authorize()
+    {
+        Debug.Log("Authorize");
+        AuthorizePlayer();
+    }
 
-
-    public void GetPlayerData() => 
+    public void GetPlayerData() =>
         GetPlayerIDData();
 
-    public void ShowRateGamePopup() => 
-        RateGame();
+    public void ShowRateGamePopup()
+    {
+        if (!PlayerLoggedIn)
+        {
+            Debug.Log("YandexApi ShowRateGamePopup Player Not Authorized");
+            return;
+        }
 
-    public void SetPlayerIDName(string name) => 
+        RateGame();
+    }
+
+    public void SetPlayerIDName(string name) =>
         PlayerIDName = name;
 
-    public void SetPlayerIDAvatar(string url) => 
+    public void SetPlayerIDAvatar(string url) =>
         PlayerAvatarUrl = url;
 
     public void SaveToYandex(string progress)
@@ -77,7 +87,7 @@ public class YandexAPI : MonoBehaviour
         SavePlayerDataToYandex(progress);
     }
 
-    public void LoadFromYandex() => 
+    public void LoadFromYandex() =>
         LoadPlayerDataFromYandex();
 
     public void CopyYandexProgress(string progress)
@@ -89,6 +99,12 @@ public class YandexAPI : MonoBehaviour
 
     public void SaveYandexLeaderboard(int newMaxLevel)
     {
+        if (!PlayerLoggedIn)
+        {
+            Debug.Log("YandexApi SaveYandexLeaderboard Player Not Authorized");
+            return;
+        }
+
         Debug.Log($"Sending new max level {newMaxLevel} to Yandex leaderboard");
         UpdateLeaderboardData(newMaxLevel);
     }
@@ -96,15 +112,15 @@ public class YandexAPI : MonoBehaviour
     public string GetPlatformLanguage() =>
         GetSystemLanguage();
 
-    public void ShowYandexInterstitial() => 
+    public void ShowYandexInterstitial() =>
         ShowFullscrenAds();
 
-    public void PauseGame() => 
+    public void PauseGame() =>
         _timeService.PauseGame();
 
-    public void UnPauseGame() => 
+    public void UnPauseGame() =>
         _timeService.ResumeGame();
 
-    public void InitTimeService(ITimeService timeService) => 
+    public void InitTimeService(ITimeService timeService) =>
         _timeService = timeService;
 }
