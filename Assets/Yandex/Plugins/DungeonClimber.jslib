@@ -1,12 +1,12 @@
 mergeInto(LibraryManager.library, {
 
    GetPlayerIDData: function () {
-	  console.log('Plugin GetPlayerIDData');
-	  console.log(player);
-	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDName', player.getName());
-	  console.log(player.getName());
-	  myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDAvatar', player.getPhoto("medium"));
-	  console.log(player.getPhoto("medium"));
+		console.log('Plugin GetPlayerIDData');
+		console.log(player);
+		myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDName', player.getName());
+		console.log(player.getName());
+		myGameInstance.SendMessage('YandexAPI', 'SetPlayerIDAvatar', player.getPhoto("medium"));
+		console.log(player.getPhoto("medium"));
 	},
 	
 	RateGame: function () {
@@ -24,22 +24,20 @@ mergeInto(LibraryManager.library, {
     },
 	
 	SavePlayerDataToYandex: function (playerData) {
-	  var dataString = UTF8ToString(playerData);
-	  var myObj = JSON.parse(dataString);
-	  player.setData(myObj);
-	  console.log(dataString);
-	  console.log(myObj);
+		var dataString = UTF8ToString(playerData);
+		var myObj = JSON.parse(dataString);
+		player.setData(myObj);
+		console.log(dataString);
+		console.log(myObj);
     },
 	
 	LoadPlayerDataFromYandex: function () {
-	 player.getData().then(_data => {
-		 const myJSON = JSON.stringify(_data);
-		 myGameInstance.SendMessage('YandexAPI', 'CopyYandexProgress', myJSON);
-		 console.log('Loading saved data');
-		 console.log(myJSON);
-		
-		 
-	 });
+		player.getData().then(_data => {
+			const myJSON = JSON.stringify(_data);
+			myGameInstance.SendMessage('YandexAPI', 'CopyYandexProgress', myJSON);
+			console.log('Loading saved data');
+			console.log(myJSON);
+		});
     },
 	
 	UpdateLeaderboardData : function (value) {
@@ -83,33 +81,36 @@ mergeInto(LibraryManager.library, {
 		console.log('Plugin Authorize Button');
 		if (player.getMode() === 'lite') {
 			// Player not authorized.
-				console.log('Plugin Not authorized');
-				playerAuthorized = false;
-					
-				sdk.auth.openAuthDialog().then(() => {
-					// Player authorized successfully
-					console.log('Plugin Authorize Success');
-					playerAuthorized = true;
-				}).then(()=>{
-					initPlayer().then(()=>{
-						console.log('Plugin Authorize CheckStatus');
-						myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
-					})
-					.catch(err => {
-                        // Ошибка при инициализации объекта Player.
-                    });
-					
-				}).catch(() => {
+			console.log('Plugin Not authorized');
+			playerAuthorized = false;
+			sdk.auth.openAuthDialog().then(() => {
+				// Player authorized successfully
+				console.log('Plugin Authorize Success');
+				playerAuthorized = true;
+			})
+			.then(()=>{
+				initPlayer().then(()=>{
+					console.log('Plugin Authorize CheckStatus');
+					myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+				})
+				.then(()=>{
+						// TO DO Sync and load progress from Yandex
+						myGameInstance.SendMessage('YandexAPI', 'LoadYandexProgressAfterAuthorization');
+						
+						// Reinit level cells data in level selection
+				})
+				.catch(err => {
+                        // Player object init error.
+                });
+				})
+				.catch(() => {
                     // Player not authorized.
                 });
-				
-				console.log('AuthorizePlayer end if');
-			}
-			else
-			{
-				playerAuthorized = true;
-				console.log('Plugin Authorized');
-			}
+		}
+		else {
+			playerAuthorized = true;
+			console.log('Plugin Authorized');
+		}
 			
 		/* initPlayer().then(_player => {
 			if (_player.getMode() === 'lite') {

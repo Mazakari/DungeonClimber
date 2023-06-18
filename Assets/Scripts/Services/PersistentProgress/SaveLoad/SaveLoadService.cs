@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SaveLoadService : ISaveLoadService
 {
@@ -29,26 +28,6 @@ public class SaveLoadService : ISaveLoadService
         SaveProgressToYandex(progress);
 #endif
     }
-
-    //    public PlayerProgress LoadProgress()
-    //    {
-    //        string progressString;
-    //        PlayerProgress playerProgress = null;
-
-    //        progressString = PlayerPrefs.GetString(Constants.PROGRESS_KEY);
-
-    //#if !UNITY_EDITOR
-    //        Debug.Log("SaveLoadService.LoadProgress from Yandex");
-    //        progressString = _yandexService.API.PlayerProgress;
-    //#endif
-
-    //        if (progressString != null)
-    //        {
-    //            playerProgress = progressString.ToDeserialized<PlayerProgress>();
-    //        }
-
-    //        return playerProgress;
-    //    }
 
     public PlayerProgress LoadProgress(bool local)
     {

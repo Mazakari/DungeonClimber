@@ -68,7 +68,7 @@ public class LoadProgressState : IState
         _progressService.Progress = _saveLoadService.LoadProgress(local) ?? NewProgress();
     private PlayerProgress NewProgress()
     {
-        Debug.Log("Cloud pProgress is null. Create new progress");
+        Debug.Log("Cloud Progress is null. Create new progress");
         return new(initialLevel: Constants.NEW_PROGRESS_FIRST_LEVEL_SCENE_NAME);
     }
 }

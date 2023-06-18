@@ -43,10 +43,11 @@ public class YandexAPI : MonoBehaviour
 
     private ITimeService _timeService;
 
-
     private void Awake() =>
         DontDestroyOnLoad(this);
 
+    public void Construct(ITimeService timeService) => 
+        _timeService = timeService;
 
     public void CheckAuthorizedStatus()
     {
@@ -118,6 +119,12 @@ public class YandexAPI : MonoBehaviour
     public void UnPauseGame() =>
         _timeService.ResumeGame();
 
-    public void InitTimeService(ITimeService timeService) =>
-        _timeService = timeService;
+    public void LoadYandexProgressAfterAuthorization()
+    {
+        if (PlayerLoggedIn)
+        {
+            // Copy save to _yandexService.API.PlayerProgress and await for OnYandexProgressCopied callback for MainMenuState
+            LoadFromYandex();
+        }
+    }
 }

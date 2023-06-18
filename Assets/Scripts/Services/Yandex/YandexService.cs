@@ -5,6 +5,6 @@
     public YandexService(YandexAPI yandexAPI, ITimeService timeService)
     {
         API = yandexAPI;
-        API.InitTimeService(timeService);
+        API.Construct(timeService);
     }
 }

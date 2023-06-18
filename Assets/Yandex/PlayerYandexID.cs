@@ -9,26 +9,10 @@ public class PlayerYandexID : MonoBehaviour
     [SerializeField] private RawImage _playerAvatar;
     [SerializeField] private TMP_Text _playerName;
 
-    private string _avatarURL;
-
-    private void OnEnable()
-    {
-        //GetPlayerAvatar();
-    }
-
-    private void GetPlayerAvatar()
-    {
-        if (_avatarURL != null)
-        {
-            SetAvatarImage(_avatarURL);
-        }
-    }
-
     public void InitID(string name, string avatarUrl)
     {
         SetPlayerName(name);
         SetAvatarImage(avatarUrl);
-        //_avatarURL = avatarUrl;
     }
 
     private void SetPlayerName(string name) => 

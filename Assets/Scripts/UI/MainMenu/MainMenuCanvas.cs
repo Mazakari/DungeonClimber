@@ -26,6 +26,8 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     private void OnEnable()
     {
         InitYandexProgressResetButton();
+        MainMenuState.OnAuthorizationPlayerProgressSynced += OverwriteLevelCellsData;
+
         _levelCellsService = AllServices.Container.Single<ILevelCellsService>();
         SettingsPopup.OnSettingsSaved += HideSettingsPopup;
 
@@ -34,8 +36,11 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     private void Start() => 
         InitLevelsSelectionPopup();
 
-    private void OnDisable() => 
+    private void OnDisable()
+    {
         SettingsPopup.OnSettingsSaved -= HideSettingsPopup;
+        MainMenuState.OnAuthorizationPlayerProgressSynced -= OverwriteLevelCellsData;
+    }
 
     public void ShowSelectLevelsPopup()
     {
@@ -85,7 +90,10 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     }
 
     public void UpdateProgress(PlayerProgress progress) {}
-    public void LoadProgress(PlayerProgress progress)
+    public void LoadProgress(PlayerProgress progress) => 
+        OverwriteLevelCellsData(progress);
+
+    private void OverwriteLevelCellsData(PlayerProgress progress)
     {
         int number;
         string name;
@@ -104,7 +112,7 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
 
                 sprite = progress.gameData.levels[i].artifactSprite;
                 artifactLocked = progress.gameData.levels[i].artifactLocked;
-                
+
 
                 _levelCellsService.Levels[i].InitLevelCell(number, name, locked, sprite, artifactLocked);
             }
