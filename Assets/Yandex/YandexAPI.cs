@@ -55,13 +55,10 @@ public class YandexAPI : MonoBehaviour
         OnAuthorizedStatusResponse?.Invoke();
     }
 
-    public void Authorize()
-    {
-        Debug.Log("Authorize");
+    public void Authorize() => 
         AuthorizePlayer();
-    }
 
-    public void GetPlayerData() =>
+    public void GetPlayerData() => 
         GetPlayerIDData();
 
     public void ShowRateGamePopup()

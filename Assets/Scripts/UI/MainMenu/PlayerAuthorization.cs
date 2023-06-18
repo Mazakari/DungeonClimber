@@ -25,11 +25,8 @@ public class PlayerAuthorization : MonoBehaviour
 #endif
     }
 
-    public void AuthorizeButton()
-    {
-        Debug.Log("AuthorizeButton");
+    public void AuthorizeButton() => 
         _yandexService.API.Authorize();
-    }
 
     private void InitAuthDisplay()
     {
@@ -40,12 +37,11 @@ public class PlayerAuthorization : MonoBehaviour
     private void ShowAuthState()
     {
         bool authorized = _yandexService.API.PlayerLoggedIn;
-        GetPlayerDataAndUpdateYandexIDUI(authorized);
 
         _authorizePlayer.SetActive(!authorized);
         _playerYandexID.SetActive(authorized);
 
-        Debug.Log($"PlayerAuthorization.ShowAuthState Player authorized = {authorized}");
+        GetPlayerDataAndUpdateYandexIDUI(authorized);
     }
 
     private void GetPlayerDataAndUpdateYandexIDUI(bool authorized)

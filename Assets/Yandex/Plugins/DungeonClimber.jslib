@@ -81,45 +81,64 @@ mergeInto(LibraryManager.library, {
 	
 	AuthorizePlayer : function () {
 		console.log('Plugin Authorize Button');
-		/*sdk.auth.openAuthDialog().then(() => {
-			// Player authorized successfully
-			console.log('Plugin Authorize Success');
-			playerAuthorized = true;
-			myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
-        }).catch(() => {
-				// Player not authorized.
-				console.log('Plugin Authorize Failed');
+		if (player.getMode() === 'lite') {
+			// Player not authorized.
+				console.log('Plugin Not authorized');
 				playerAuthorized = false;
-			});*/
-		initPlayer().then(_player => {
-		if (_player.getMode() === 'lite') {
-		    // Player not authorized.
-			console.log('Plugin Not authorized');
-			playerAuthorized = false;
 					
-            sdk.auth.openAuthDialog().then(() => {
-                // Player authorized successfully
-				console.log('Plugin Authorize Success');
+				sdk.auth.openAuthDialog().then(() => {
+					// Player authorized successfully
+					console.log('Plugin Authorize Success');
 					playerAuthorized = true;
-					myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+				}).then(()=>{
+					initPlayer().then(()=>{
+						console.log('Plugin Authorize CheckStatus');
+						myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
+					})
+					.catch(err => {
+                        // Ошибка при инициализации объекта Player.
+                    });
+					
+				}).catch(() => {
+                    // Player not authorized.
+                });
+				
+				console.log('AuthorizePlayer end if');
+			}
+			else
+			{
+				playerAuthorized = true;
+				console.log('Plugin Authorized');
+			}
+			
+		/* initPlayer().then(_player => {
+			if (_player.getMode() === 'lite') {
+				// Player not authorized.
+				console.log('Plugin Not authorized');
+				playerAuthorized = false;
+					
+				sdk.auth.openAuthDialog().then(() => {
+					// Player authorized successfully
+					console.log('Plugin Authorize Success');
+					playerAuthorized = true;
 					initPlayer().catch(err => {
                         // Player object initialization error.
                     });
                 }).catch(() => {
                     // Player not authorized.
                 });
-		
-        }
-		else
-		{
-			playerAuthorized = true;
-			console.log('Index Authorized');
-		}
+				console.log('AuthorizePlayer end if');
+			}
+			else
+			{
+				playerAuthorized = true;
+				console.log('Plugin Authorized');
+			}
 		}).catch(err => {
 			// Player object initialization error.
-		});
+		});  */
 		
-		},
+	},
 	
 	PlayerAuthorized : function () {
 		console.log('Plugin PlayerAuthorized');

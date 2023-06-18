@@ -13,9 +13,8 @@ public class PlayerYandexID : MonoBehaviour
 
     private void OnEnable()
     {
-        GetPlayerAvatar();
+        //GetPlayerAvatar();
     }
-       
 
     private void GetPlayerAvatar()
     {
@@ -27,17 +26,13 @@ public class PlayerYandexID : MonoBehaviour
 
     public void InitID(string name, string avatarUrl)
     {
-        Debug.Log("PlayerYandexID.InitID");
         SetPlayerName(name);
         SetAvatarImage(avatarUrl);
-        _avatarURL = avatarUrl;
+        //_avatarURL = avatarUrl;
     }
 
-    private void SetPlayerName(string name)
-    {
+    private void SetPlayerName(string name) => 
         _playerName.text = name;
-        Debug.Log($"PlayerYandexID.SetPlayerName.txt = {_playerName.text}");
-    }
 
     private void SetAvatarImage(string url) => 
         StartCoroutine(DownloadImage(url));
@@ -55,8 +50,6 @@ public class PlayerYandexID : MonoBehaviour
         else
         {
             _playerAvatar.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Debug.Log($"PlayerYandexID._playerAvatar = {_playerAvatar.texture.name}");
-
         }
     }
 }
