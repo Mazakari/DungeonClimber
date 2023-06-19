@@ -24,7 +24,7 @@ public class LoadProgressState : IState
         _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MAIN_MENU_SCENE_NAME);
 #endif
 
-#if !UNITY_EDITOR
+#if!UNITY_EDITOR
         _yandexService.API.OnAuthorizedStatusResponse += LoadPlayerProgress;
         _yandexService.API.OnYandexProgressCopied += LoadProgressFromCloud;
 
