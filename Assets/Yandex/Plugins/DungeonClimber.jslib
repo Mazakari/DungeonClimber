@@ -94,10 +94,7 @@ mergeInto(LibraryManager.library, {
 					myGameInstance.SendMessage('YandexAPI', 'CheckAuthorizedStatus');
 				})
 				.then(()=>{
-						// TO DO Sync and load progress from Yandex
-						myGameInstance.SendMessage('YandexAPI', 'LoadYandexProgressAfterAuthorization');
-						
-						// Reinit level cells data in level selection
+					myGameInstance.SendMessage('YandexAPI', 'LoadYandexProgressAfterAuthorization');
 				})
 				.catch(err => {
                         // Player object init error.

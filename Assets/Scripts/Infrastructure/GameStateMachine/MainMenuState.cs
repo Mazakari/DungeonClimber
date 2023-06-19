@@ -28,8 +28,6 @@ public class MainMenuState : IState
 #endif
     }
 
-  
-
     public void Exit()
     {
         LevelCell.OnLevelCellPress -= StartGame;
@@ -52,9 +50,25 @@ public class MainMenuState : IState
     }
     private void LoadProgressOrInitNew(bool local)
     {
-        _progressService.Progress = _saveLoadService.LoadProgress(local) ?? NewProgress();
+        SaveLocalProgressToCloudIfCloudNull(local);
+        LoadCloudProgress(local);
+
         OnAuthorizationPlayerProgressSynced?.Invoke(_progressService.Progress);
     }
+
+    private void SaveLocalProgressToCloudIfCloudNull(bool local)
+    {
+        PlayerProgress cloudProgress = _saveLoadService.LoadProgress(local);
+
+        if (cloudProgress == null && _progressService.Progress != null)
+        {
+            string progress = _progressService.Progress.ToJson();
+            _yandexService.API.SaveToYandex(progress);
+        }
+    }
+
+    private void LoadCloudProgress(bool local) =>
+       _progressService.Progress = _saveLoadService.LoadProgress(local) ?? NewProgress();
 
     private PlayerProgress NewProgress()
     {
