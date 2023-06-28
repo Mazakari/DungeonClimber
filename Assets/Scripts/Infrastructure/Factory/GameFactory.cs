@@ -23,7 +23,7 @@ public class GameFactory : IGameFactory
     public GameObject CreateLevelCell() =>
       InstantiateRegistered(AssetPath.LEVEL_CELL_PREFAB_PATH);
 
-    public void CreateVolumeControl() =>
+    public GameObject CreateVolumeControl() =>
         InstantiateRegistered(AssetPath.VOLUME_CONTROL_PREFAB_PATH);
 
     public void Cleanup()

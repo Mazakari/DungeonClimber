@@ -24,6 +24,8 @@ public class VolumeControl : MonoBehaviour, ISavedProgress
 
     private float _multiplier = 30f;
 
+    private float _curMusicVol = 0;
+    private float _curSoundsVol = 0;
 
     public void HandleMusicSliderValueChanged(float value, Slider slider, Toggle toggle)
     {
@@ -114,5 +116,20 @@ public class VolumeControl : MonoBehaviour, ISavedProgress
             SoundsVolume = -80f;
             _audioMixer.SetFloat(_soundsVolumeParameter, SoundsVolume);
         }
+    }
+
+    public void MuteAudio()
+    {
+        _audioMixer.GetFloat(_musicVolumeParameter, out _curMusicVol);
+        _audioMixer.GetFloat(_soundsVolumeParameter, out _curSoundsVol);
+
+        _audioMixer.SetFloat(_musicVolumeParameter, -80f);
+        _audioMixer.SetFloat(_soundsVolumeParameter, -80f);
+    }
+
+    public void UnMuteAudio()
+    {
+        _audioMixer.SetFloat(_musicVolumeParameter, _curMusicVol);
+        _audioMixer.SetFloat(_soundsVolumeParameter, _curSoundsVol);
     }
 }

@@ -527,7 +527,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 1000, y: 200}
+  m_SizeDelta: {x: 600, y: 250}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1236369869166097434
 CanvasRenderer:
@@ -1765,17 +1765,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5951692874125617460}
     m_Modifications:
-    - target: {fileID: 1068470500459793485, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 2027462240693015832, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_Name
       value: PlayerAuthorization
-      objectReference: {fileID: 0}
-    - target: {fileID: 5475545063930134320, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9166193014858025357, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_Pivot.x
@@ -1807,11 +1799,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9166193014858025357, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 600
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 9166193014858025357, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 260
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 9166193014858025357, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1863,7 +1855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9201656616722601900, guid: be7ae486d9b04284a8ece31054653b6d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2113,10 +2105,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3966000146048900967, guid: c2377ec375472f04f8ea3ba51c019a51, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5951692874125617463}
+    - target: {fileID: 4438770135496546187, guid: c2377ec375472f04f8ea3ba51c019a51, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438770135496546187, guid: c2377ec375472f04f8ea3ba51c019a51, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -520
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438770135496546187, guid: c2377ec375472f04f8ea3ba51c019a51, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -570
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438770135496546187, guid: c2377ec375472f04f8ea3ba51c019a51, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

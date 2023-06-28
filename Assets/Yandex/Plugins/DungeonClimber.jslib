@@ -60,17 +60,20 @@ mergeInto(LibraryManager.library, {
 	
 	ShowFullscrenAds : function () {
 		myGameInstance.SendMessage('YandexAPI', 'PauseGame');
+		myGameInstance.SendMessage('YandexAPI', 'MuteAudio');
 		
 		ysdk.adv.showFullscreenAdv({
 			callbacks: {
 			onClose: function(wasShown) {
 				console.log('Interstitial ads shown');
 				myGameInstance.SendMessage('YandexAPI', 'UnPauseGame');
+				myGameInstance.SendMessage('YandexAPI', 'UnMuteAudio');
 			// some action after close
         },
         onError: function(error) {
 			console.log('Interstitial ads show failed');
 			myGameInstance.SendMessage('YandexAPI', 'UnPauseGame');
+			myGameInstance.SendMessage('YandexAPI', 'UnMuteAudio');
           // some action on error
         }
 		}

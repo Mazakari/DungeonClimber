@@ -64,7 +64,8 @@ public class LoadMainMenuState : IPayloadedState<string>
         VolumeControl vc = Object.FindObjectOfType<VolumeControl>();
         if (vc != null) return;
 
-        _gameFactory.CreateVolumeControl();
+        vc = _gameFactory.CreateVolumeControl().GetComponent<VolumeControl>();
+        _yandexService.API.SetVolumeControlReference(vc);
     }
 
     private void InitLevelCells() => 

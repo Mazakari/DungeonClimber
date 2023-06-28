@@ -42,6 +42,7 @@ public class YandexAPI : MonoBehaviour
 
 
     private ITimeService _timeService;
+    private VolumeControl _volumeControl;
 
     private void Awake() =>
         DontDestroyOnLoad(this);
@@ -119,6 +120,13 @@ public class YandexAPI : MonoBehaviour
     public void UnPauseGame() =>
         _timeService.ResumeGame();
 
+    public void MuteAudio() => 
+        _volumeControl.MuteAudio();
+
+    public void UnMuteAudio() => 
+        _volumeControl.UnMuteAudio();
+
+
     public void LoadYandexProgressAfterAuthorization()
     {
         if (PlayerLoggedIn)
@@ -127,4 +135,7 @@ public class YandexAPI : MonoBehaviour
             LoadFromYandex();
         }
     }
+
+    public void SetVolumeControlReference(VolumeControl volumeControl) => 
+        _volumeControl = volumeControl;
 }

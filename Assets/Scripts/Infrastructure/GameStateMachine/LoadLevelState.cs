@@ -60,13 +60,13 @@ public class LoadLevelState : IPayloadedState<string>
         _gameFactory.CreateLevelHud();
 
         Transform followTransform = player.GetComponent<Transform>();
-        CinemachineCameraFollow(followTransform);
+        CameraFollow(followTransform);
     }
 
-    private void CinemachineCameraFollow(Transform player)
+    private void CameraFollow(Transform player)
     {
-        CinemachineVirtualCamera cam = Object.FindObjectOfType<CinemachineVirtualCamera>();
-        cam.Follow = player;
+        SmoothCameraFollow cam = Object.FindObjectOfType<SmoothCameraFollow>();
+        cam.SetTarget(player);
     }
 
     private static void InitTreasureChest()
