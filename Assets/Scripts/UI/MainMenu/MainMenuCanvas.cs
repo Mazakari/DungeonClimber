@@ -77,9 +77,15 @@ public class MainMenuCanvas : MonoBehaviour, ISavedProgress
     {
         for (int i = 0; i < _levelCellsService.Levels.Length; i++)
         {
-            _levelCellsService.Levels[i].transform.SetParent(_levelSelectionContent);
-            _levelCellsService.Levels[i].GetComponent<RectTransform>().localScale = Vector3.one;
+            ParentCellAndResetScale(i);
         }
+    }
+
+    private void ParentCellAndResetScale(int i)
+    {
+        LevelCell cell = _levelCellsService.Levels[i];
+        cell.transform.SetParent(_levelSelectionContent);
+        cell.GetComponent<RectTransform>().localScale = Vector3.one;
     }
 
     private void InitYandexProgressResetButton()
